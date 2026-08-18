@@ -12,6 +12,8 @@ your submissions pass on the first try.
 
 ### PR Checks (CI)
 
+Create a file at `.github/workflows/ci.yml`:
+
 ```yaml
 name: CI
 on:
@@ -32,6 +34,8 @@ jobs:
 The action auto-detects whether your project is a plugin or theme.
 
 ### Release
+
+Create a file at `.github/workflows/release.yml`:
 
 ```yaml
 name: Release
@@ -59,7 +63,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-Or use the reusable release workflow for a single-file setup:
+This creates a **draft release** — after the workflow completes, go to your
+repository's Releases page to review and publish it.
+
+Or use the reusable release workflow for a single-file setup at
+`.github/workflows/release.yml`:
 
 ```yaml
 name: Release
@@ -75,6 +83,8 @@ jobs:
       id-token: write
       attestations: write
 ```
+
+This also creates a draft release that you need to manually publish.
 
 ## Inputs
 
