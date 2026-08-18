@@ -337,7 +337,7 @@ const IGNORES = ${JSON.stringify(SCANNER_STYLELINT_CONFIG.ignoreFiles)};
 
 export default [
   globalIgnores(IGNORES),
-  { ignores: ["eslint.config.scanner.mjs", "main.js", "styles.css"] },
+  { ignores: ["eslint.config.scanner.mjs", "main.js", "styles.css", "manifest.json"] },
   ...obsidianmd.configs.recommended.map(config => {
     if (config.rules) {
       const filtered = { ...config.rules };
@@ -392,8 +392,6 @@ export default [
             "eslint.config.js",
             "eslint.config.mjs",
             "eslint.config.mts",
-            "manifest.json",
-            "main.js",
           ]
         },
         tsconfigRootDir: cwd(),
@@ -437,7 +435,7 @@ export default [
     }
   },
   {
-    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "manifest.json"],
+    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
     rules: {
       "obsidianmd/ui/sentence-case": "off",
       "obsidianmd/ui/sentence-case-json": "off",
@@ -479,7 +477,7 @@ export default [
     }
   },
   globalIgnores(IGNORES),
-  { ignores: ["eslint.config.scanner.mjs", "main.js", "styles.css"] },
+  { ignores: ["eslint.config.scanner.mjs", "main.js", "styles.css", "manifest.json"] },
 ];
 `
 }
