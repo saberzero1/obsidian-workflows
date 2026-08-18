@@ -72,14 +72,14 @@ const SCANNER_STYLELINT_CONFIG = {
           'Use hex colors or Obsidian CSS variables instead of named colors to ensure proper light/dark theme support. <https://docs.obsidian.md/Reference/CSS+variables/CSS+variables>'
       }
     ],
-    'custom-property-no-missing-var-function': false,
-    'no-duplicate-selectors': false,
-    'no-duplicate-at-import-rules': false,
+    'custom-property-no-missing-var-function': null,
+    'no-duplicate-selectors': null,
+    'no-duplicate-at-import-rules': null,
     'declaration-block-no-duplicate-properties': [
       true,
       { severity: 'warning' }
     ],
-    'shorthand-property-no-redundant-values': false,
+    'shorthand-property-no-redundant-values': null,
     'plugin/no-unsupported-browser-features': [
       true,
       {
@@ -121,8 +121,8 @@ const SCANNER_STYLELINT_CONFIG = {
 } as const
 
 const SCANNER_STYLELINT_DEPS = [
-  'stylelint@17',
-  'stylelint-no-unsupported-browser-features@8'
+  'stylelint@17.6.0',
+  'stylelint-no-unsupported-browser-features@8.1.1'
 ]
 
 const SCANNER_ESLINT_DEPS = [
@@ -308,7 +308,10 @@ export default [
         projectService: {
           allowDefaultProject: [
             "eslint.config.js",
-            "manifest.json"
+            "eslint.config.mjs",
+            "eslint.config.mts",
+            "manifest.json",
+            "main.js",
           ]
         },
         tsconfigRootDir: cwd(),
@@ -317,6 +320,13 @@ export default [
     },
   },
   ...toWarns(obsidianmd.configs.recommended),
+  {
+    linterOptions: {
+      noInlineConfig: false,
+      reportUnusedDisableDirectives: "off",
+      reportUnusedInlineConfigs: "off",
+    },
+  },
   {
     files: ["**/*.{ts,cts,mts,tsx,js,cjs,mjs,jsx}"],
     rules: {
