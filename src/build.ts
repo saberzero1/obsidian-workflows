@@ -2,6 +2,7 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
+import { hasPackageJson, ensureUserDeps } from './deps.js'
 import type { ProjectType, ValidationResult } from './types.js'
 
 const BUILD_SCRIPTS_PRIORITY = ['build', 'build:plugin', 'compile']
@@ -24,10 +25,6 @@ function detectBuildScript(workspacePath: string): string | null {
   }
 
   return null
-}
-
-function hasPackageJson(workspacePath: string): boolean {
-  return fs.existsSync(path.join(workspacePath, 'package.json'))
 }
 
 export async function runBuild(
@@ -63,27 +60,14 @@ export async function runBuild(
     return results
   }
 
-  const hasLockfile = fs.existsSync(
-    path.join(workspacePath, 'package-lock.json')
-  )
-  const hasNodeModules = fs.existsSync(path.join(workspacePath, 'node_modules'))
-
-  if (hasPackageJson(workspacePath) && !hasNodeModules) {
-    core.info('Installing dependencies...')
-    const installCmd = hasLockfile ? 'npm ci' : 'npm install'
-    const installCode = await exec.exec(installCmd, [], {
-      cwd: workspacePath,
-      ignoreReturnCode: true
+  const installed = await ensureUserDeps(workspacePath)
+  if (!installed) {
+    results.push({
+      message: 'Dependency installation failed.',
+      severity: 'error',
+      check: 'build'
     })
-
-    if (installCode !== 0) {
-      results.push({
-        message: `Dependency installation failed (exit code ${installCode}).`,
-        severity: 'error',
-        check: 'build'
-      })
-      return results
-    }
+    return results
   }
 
   core.info(`Running build: ${buildCommand}`)
