@@ -69,20 +69,19 @@ const SCANNER_STYLELINT_CONFIG = {
     'color-named': [
       'never',
       {
-        ignoreKeywords: ['transparent', 'currentColor'],
         severity: 'warning',
         message:
           'Use hex colors or Obsidian CSS variables instead of named colors to ensure proper light/dark theme support. <https://docs.obsidian.md/Reference/CSS+variables/CSS+variables>'
       }
     ],
-    'custom-property-no-missing-var-function': false,
-    'no-duplicate-selectors': false,
-    'no-duplicate-at-import-rules': false,
+    'custom-property-no-missing-var-function': null,
+    'no-duplicate-selectors': null,
+    'no-duplicate-at-import-rules': null,
     'declaration-block-no-duplicate-properties': [
       true,
       { severity: 'warning' }
     ],
-    'shorthand-property-no-redundant-values': false,
+    'shorthand-property-no-redundant-values': null,
     'plugin/no-unsupported-browser-features': [
       true,
       {
