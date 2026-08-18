@@ -52,7 +52,8 @@ export default [
             'eslint.config.mjs',
             'jest.config.js',
             'rollup.config.ts'
-          ]
+          ],
+          maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 16
         },
         tsconfigRootDir: import.meta.dirname
       }

@@ -1,7 +1,10 @@
 import * as fs from 'node:fs'
+import * as os from 'node:os'
 import * as path from 'node:path'
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
+import { ensureUserDeps } from './deps.js'
+import { readManifest } from './detect.js'
 import type { ProjectType, ValidationResult } from './types.js'
 
 const SCANNER_STYLELINT_CONFIG = {
@@ -72,14 +75,14 @@ const SCANNER_STYLELINT_CONFIG = {
           'Use hex colors or Obsidian CSS variables instead of named colors to ensure proper light/dark theme support. <https://docs.obsidian.md/Reference/CSS+variables/CSS+variables>'
       }
     ],
-    'custom-property-no-missing-var-function': null,
-    'no-duplicate-selectors': null,
-    'no-duplicate-at-import-rules': null,
+    'custom-property-no-missing-var-function': false,
+    'no-duplicate-selectors': false,
+    'no-duplicate-at-import-rules': false,
     'declaration-block-no-duplicate-properties': [
       true,
       { severity: 'warning' }
     ],
-    'shorthand-property-no-redundant-values': null,
+    'shorthand-property-no-redundant-values': false,
     'plugin/no-unsupported-browser-features': [
       true,
       {
@@ -118,28 +121,89 @@ const SCANNER_STYLELINT_CONFIG = {
     'unit-no-unknown': [true, { severity: 'warning' }],
     'property-disallowed-list': [['all'], { severity: 'warning' }]
   }
-} as const
+}
 
-const SCANNER_STYLELINT_DEPS = [
-  'stylelint@17.6.0',
-  'stylelint-no-unsupported-browser-features@8.1.1'
-]
+// Source: community-workers/src/worker/electronVersions.json
+const ELECTRON_VERSIONS: Record<number, string> = {
+  25: '1.4.5',
+  28: '1.5.8',
+  30: '1.6.5',
+  31: '1.7.4',
+  37: '1.9.12',
+  39: '1.11.4'
+}
 
-const SCANNER_ESLINT_DEPS = [
-  'eslint@9',
-  'eslint-plugin-obsidianmd@0.4.1',
-  'typescript-eslint@8'
-]
+const DEFAULT_ELECTRON = 39
 
-async function installLintDeps(
-  deps: string[],
-  workspacePath: string
-): Promise<boolean> {
-  const exitCode = await exec.exec('npm', ['install', '--no-save', ...deps], {
-    cwd: workspacePath,
+function semverToNum(v: string): number {
+  const [major = 0, minor = 0, patch = 0] = v.split('.').map(Number)
+  return major * 100_000 + minor * 1_000 + patch
+}
+
+export function getMinElectronVersion(
+  minAppVersion: string | undefined
+): number {
+  if (!minAppVersion) return DEFAULT_ELECTRON
+
+  const target = semverToNum(minAppVersion)
+  let result = Math.min(...Object.keys(ELECTRON_VERSIONS).map(Number))
+
+  for (const [electronStr, obsidianVersion] of Object.entries(
+    ELECTRON_VERSIONS
+  )) {
+    const electron = Number(electronStr)
+    if (semverToNum(obsidianVersion) <= target) {
+      result = Math.max(result, electron)
+    }
+  }
+
+  return result
+}
+
+function buildStylelintConfig(minAppVersion: string | undefined): object {
+  const minElectron = getMinElectronVersion(minAppVersion)
+  const config = JSON.parse(JSON.stringify(SCANNER_STYLELINT_CONFIG))
+  config.rules['plugin/no-unsupported-browser-features'][1].browsers = [
+    `electron >= ${minElectron}`
+  ]
+  return config
+}
+
+const SCANNER_STYLELINT_DEPS: Record<string, string> = {
+  stylelint: '17.6.0',
+  'stylelint-no-unsupported-browser-features': '8.1.1'
+}
+
+const SCANNER_ESLINT_DEPS: Record<string, string> = {
+  eslint: '9.37.0',
+  'eslint-plugin-obsidianmd': '0.4.1',
+  'typescript-eslint': '8.61.1'
+}
+
+async function createScannerDepsDir(
+  deps: Record<string, string>
+): Promise<string> {
+  const tempDir = fs.mkdtempSync(
+    path.join(os.tmpdir(), 'obsidian-scanner-lint-')
+  )
+  const pkg = {
+    name: 'obsidian-scanner-lint',
+    private: true,
+    dependencies: deps
+  }
+  fs.writeFileSync(path.join(tempDir, 'package.json'), JSON.stringify(pkg))
+
+  const exitCode = await exec.exec('npm', ['install'], {
+    cwd: tempDir,
     ignoreReturnCode: true
   })
-  return exitCode === 0
+
+  if (exitCode !== 0) {
+    fs.rmSync(tempDir, { recursive: true, force: true })
+    throw new Error('Failed to install scanner lint dependencies.')
+  }
+
+  return tempDir
 }
 
 async function runUserLint(workspacePath: string): Promise<ValidationResult[]> {
@@ -182,13 +246,16 @@ async function runUserLint(workspacePath: string): Promise<ValidationResult[]> {
 
 async function runScannerStylelint(
   workspacePath: string,
-  projectType: ProjectType
+  projectType: ProjectType,
+  minAppVersion: string | undefined
 ): Promise<ValidationResult[]> {
   const results: ValidationResult[] = []
 
   core.info('Installing scanner stylelint dependencies...')
-  const installed = await installLintDeps(SCANNER_STYLELINT_DEPS, workspacePath)
-  if (!installed) {
+  let scannerDir: string
+  try {
+    scannerDir = await createScannerDepsDir(SCANNER_STYLELINT_DEPS)
+  } catch {
     results.push({
       message: 'Failed to install scanner stylelint dependencies.',
       severity: 'error',
@@ -198,49 +265,63 @@ async function runScannerStylelint(
   }
 
   const configPath = path.join(workspacePath, '.stylelintrc.scanner.json')
-  fs.writeFileSync(configPath, JSON.stringify(SCANNER_STYLELINT_CONFIG))
+  const config = buildStylelintConfig(minAppVersion)
+  fs.writeFileSync(configPath, JSON.stringify(config))
 
-  const targetFiles =
-    projectType === 'theme'
-      ? [path.join(workspacePath, 'theme.css')]
-      : ['**/*.css']
+  try {
+    const targetFiles =
+      projectType === 'theme'
+        ? [path.join(workspacePath, 'theme.css')]
+        : ['**/*.css']
 
-  const existingFiles = targetFiles.filter((f) => {
-    if (f.includes('*')) return true
-    return fs.existsSync(f)
-  })
+    const existingFiles = targetFiles.filter((f) => {
+      if (f.includes('*')) return true
+      return fs.existsSync(f)
+    })
 
-  if (existingFiles.length === 0) {
-    core.info('No CSS files found to lint.')
-    fs.unlinkSync(configPath)
-    return results
-  }
-
-  core.info('Running scanner stylelint...')
-  const exitCode = await exec.exec(
-    'npx',
-    ['stylelint', ...existingFiles, '--config', configPath],
-    {
-      cwd: workspacePath,
-      ignoreReturnCode: true
+    if (existingFiles.length === 0) {
+      core.info('No CSS files found to lint.')
+      return results
     }
-  )
 
-  fs.unlinkSync(configPath)
+    core.info('Running scanner stylelint...')
+    const exitCode = await exec.exec(
+      'npx',
+      [
+        '--prefix',
+        scannerDir,
+        'stylelint',
+        ...existingFiles,
+        '--config',
+        configPath
+      ],
+      {
+        cwd: workspacePath,
+        ignoreReturnCode: true,
+        env: {
+          ...process.env,
+          NODE_PATH: path.join(scannerDir, 'node_modules')
+        }
+      }
+    )
 
-  if (exitCode !== 0 && exitCode !== 2) {
-    results.push({
-      message: `Scanner stylelint failed (exit code ${exitCode}).`,
-      severity: 'error',
-      check: 'lint'
-    })
-  } else if (exitCode === 2) {
-    results.push({
-      message:
-        'Scanner stylelint found issues. Review the output above for details.',
-      severity: 'warning',
-      check: 'lint'
-    })
+    if (exitCode !== 0 && exitCode !== 2) {
+      results.push({
+        message: `Scanner stylelint failed (exit code ${exitCode}).`,
+        severity: 'error',
+        check: 'lint'
+      })
+    } else if (exitCode === 2) {
+      results.push({
+        message:
+          'Scanner stylelint found issues. Review the output above for details.',
+        severity: 'warning',
+        check: 'lint'
+      })
+    }
+  } finally {
+    fs.rmSync(scannerDir, { recursive: true, force: true })
+    if (fs.existsSync(configPath)) fs.unlinkSync(configPath)
   }
 
   return results
@@ -409,9 +490,13 @@ async function runScannerEslint(
 
   const hasTsconfig = fs.existsSync(path.join(workspacePath, 'tsconfig.json'))
 
+  await ensureUserDeps(workspacePath)
+
   core.info('Installing scanner ESLint dependencies...')
-  const installed = await installLintDeps(SCANNER_ESLINT_DEPS, workspacePath)
-  if (!installed) {
+  let scannerDir: string
+  try {
+    scannerDir = await createScannerDepsDir(SCANNER_ESLINT_DEPS)
+  } catch {
     results.push({
       message: 'Failed to install scanner ESLint dependencies.',
       severity: 'error',
@@ -424,29 +509,49 @@ async function runScannerEslint(
   const configPath = path.join(workspacePath, 'eslint.config.scanner.mjs')
   fs.writeFileSync(configPath, configContent)
 
-  core.info(
-    hasTsconfig
-      ? 'Running scanner ESLint with type-aware rules...'
-      : 'Running scanner ESLint without type-aware rules (no tsconfig.json)...'
-  )
+  try {
+    core.info(
+      hasTsconfig
+        ? 'Running scanner ESLint with type-aware rules...'
+        : 'Running scanner ESLint without type-aware rules (no tsconfig.json)...'
+    )
 
-  const exitCode = await exec.exec(
-    'npx',
-    ['eslint', '--config', configPath, '--no-error-on-unmatched-pattern', '.'],
-    {
-      cwd: workspacePath,
-      ignoreReturnCode: true
+    const nodePath = [
+      path.join(scannerDir, 'node_modules'),
+      path.join(workspacePath, 'node_modules')
+    ].join(path.delimiter)
+
+    const exitCode = await exec.exec(
+      'npx',
+      [
+        '--prefix',
+        scannerDir,
+        'eslint',
+        '--config',
+        configPath,
+        '--no-error-on-unmatched-pattern',
+        '.'
+      ],
+      {
+        cwd: workspacePath,
+        ignoreReturnCode: true,
+        env: {
+          ...process.env,
+          NODE_PATH: nodePath
+        }
+      }
+    )
+
+    if (exitCode !== 0) {
+      results.push({
+        message: `Scanner ESLint found issues (exit code ${exitCode}). Review the output above.`,
+        severity: 'warning',
+        check: 'lint'
+      })
     }
-  )
-
-  fs.unlinkSync(configPath)
-
-  if (exitCode !== 0) {
-    results.push({
-      message: `Scanner ESLint found issues (exit code ${exitCode}). Review the output above.`,
-      severity: 'warning',
-      check: 'lint'
-    })
+  } finally {
+    fs.rmSync(scannerDir, { recursive: true, force: true })
+    if (fs.existsSync(configPath)) fs.unlinkSync(configPath)
   }
 
   return results
@@ -466,7 +571,16 @@ export async function runLint(
     return results
   }
 
-  results.push(...(await runScannerStylelint(workspacePath, projectType)))
+  const manifest = readManifest(workspacePath)
+  const minAppVersion =
+    manifest && typeof manifest === 'object'
+      ? ((manifest as Record<string, unknown>).minAppVersion as
+          string | undefined)
+      : undefined
+
+  results.push(
+    ...(await runScannerStylelint(workspacePath, projectType, minAppVersion))
+  )
 
   if (projectType === 'plugin') {
     results.push(...(await runScannerEslint(workspacePath)))
