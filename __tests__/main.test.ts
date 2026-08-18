@@ -1,62 +1,119 @@
-/**
- * Unit tests for the action's main functionality, src/main.ts
- *
- * To mock dependencies in ESM, you can create fixtures that export mock
- * functions and objects. For example, the core module is mocked in this test,
- * so that the actual '@actions/core' module is not imported.
- */
 import { jest } from '@jest/globals'
 import * as core from '../__fixtures__/core.js'
-import { wait } from '../__fixtures__/wait.js'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
+import * as os from 'node:os'
 
-// Mocks should be declared before the module being tested is imported.
 jest.unstable_mockModule('@actions/core', () => core)
-jest.unstable_mockModule('../src/wait.js', () => ({ wait }))
+jest.unstable_mockModule('@actions/exec', () => ({
+  exec: jest.fn().mockResolvedValue(0)
+}))
 
-// The module being tested should be imported dynamically. This ensures that the
-// mocks are used in place of any actual dependencies.
 const { run } = await import('../src/main.js')
 
-describe('main.ts', () => {
-  beforeEach(() => {
-    // Set the action's inputs as return values from core.getInput().
-    core.getInput.mockImplementation(() => '500')
+function createTempDir(): string {
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'obsidian-test-'))
+}
 
-    // Mock the wait function so that it does not actually wait.
-    wait.mockImplementation(() => Promise.resolve('done!'))
+describe('main.ts', () => {
+  let tempDir: string
+
+  beforeEach(() => {
+    tempDir = createTempDir()
+    process.env.GITHUB_WORKSPACE = tempDir
+
+    core.getInput.mockImplementation((name: string) => {
+      const inputs: Record<string, string> = {
+        type: 'plugin',
+        mode: 'pr',
+        build: 'false',
+        lint: 'false',
+        'scanner-lint': 'false',
+        'node-version': '24'
+      }
+      return inputs[name] ?? ''
+    })
   })
 
   afterEach(() => {
     jest.resetAllMocks()
+    fs.rmSync(tempDir, { recursive: true, force: true })
+    delete process.env.GITHUB_WORKSPACE
   })
 
-  it('Sets the time output', async () => {
+  it('fails when manifest.json is missing', async () => {
+    fs.writeFileSync(path.join(tempDir, 'LICENSE'), 'MIT')
+    fs.writeFileSync(
+      path.join(tempDir, 'README.md'),
+      'This is a valid readme with enough text to pass.'
+    )
+
     await run()
 
-    // Verify the time output was set.
-    expect(core.setOutput).toHaveBeenNthCalledWith(
-      1,
-      'time',
-      // Simple regex to match a time string in the format HH:MM:SS.
-      expect.stringMatching(/^\d{2}:\d{2}:\d{2}/)
+    expect(core.setFailed).toHaveBeenCalled()
+  })
+
+  it('passes with valid plugin structure', async () => {
+    fs.writeFileSync(
+      path.join(tempDir, 'manifest.json'),
+      JSON.stringify({
+        id: 'test-plugin',
+        name: 'Test',
+        version: '1.0.0',
+        description: 'A sufficiently long description'
+      })
+    )
+    fs.writeFileSync(path.join(tempDir, 'LICENSE'), 'MIT')
+    fs.writeFileSync(
+      path.join(tempDir, 'README.md'),
+      'This is a valid readme with enough text to pass.'
+    )
+
+    await run()
+
+    expect(core.setFailed).not.toHaveBeenCalled()
+    expect(core.setOutput).toHaveBeenCalledWith('type', 'plugin')
+    expect(core.setOutput).toHaveBeenCalledWith('validation-passed', 'true')
+  })
+
+  it('fails with invalid type input', async () => {
+    core.getInput.mockImplementation((name: string) => {
+      if (name === 'type') return 'invalid'
+      return ''
+    })
+
+    await run()
+
+    expect(core.setFailed).toHaveBeenCalledWith(
+      expect.stringContaining('Invalid type input')
     )
   })
 
-  it('Sets a failed status', async () => {
-    // Clear the getInput mock and return an invalid value.
-    core.getInput.mockClear().mockReturnValueOnce('this is not a number')
-
-    // Clear the wait mock and return a rejected promise.
-    wait
-      .mockClear()
-      .mockRejectedValueOnce(new Error('milliseconds is not a number'))
+  it('fails with invalid mode input', async () => {
+    core.getInput.mockImplementation((name: string) => {
+      if (name === 'mode') return 'invalid'
+      if (name === 'type') return 'plugin'
+      return ''
+    })
 
     await run()
 
-    // Verify that the action was marked as failed.
-    expect(core.setFailed).toHaveBeenNthCalledWith(
-      1,
-      'milliseconds is not a number'
+    expect(core.setFailed).toHaveBeenCalledWith(
+      expect.stringContaining('Invalid mode input')
+    )
+  })
+
+  it('fails when node version is below minimum', async () => {
+    core.getInput.mockImplementation((name: string) => {
+      if (name === 'node-version') return '18'
+      if (name === 'type') return 'plugin'
+      return ''
+    })
+
+    await run()
+
+    expect(core.setFailed).toHaveBeenCalledWith(
+      expect.stringContaining('below the minimum')
     )
   })
 })

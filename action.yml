@@ -1,23 +1,56 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
-
-# Add your action's branding here. This will appear on the GitHub Marketplace.
+name: Obsidian Plugin & Theme Workflows
+description: >-
+  Validate, lint, build, and release Obsidian plugins and themes. Matches the
+  community directory's validation and scanner expectations.
+author: saberzero1
 branding:
-  icon: heart
-  color: red
+  icon: check-circle
+  color: purple
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
-    required: true
-    default: '1000'
+  type:
+    description: >-
+      Project type: plugin, theme, or auto. Auto-detection checks manifest.json
+      for an `id` field (plugin) and the presence of theme.css (theme).
+    required: false
+    default: 'auto'
+  mode:
+    description: >-
+      Run mode: pr (CI checks) or release (full release validation, attestation,
+      and draft release creation).
+    required: false
+    default: 'pr'
+  build:
+    description: >-
+      Explicit build command override (e.g. "npm run build"). For plugins in
+      release mode, the action auto-detects and runs the first matching script:
+      build, build:plugin, or compile. Set to "false" to disable build entirely.
+    required: false
+    default: ''
+  lint:
+    description: >-
+      Whether to run linting. Set to "false" to skip.
+    required: false
+    default: 'true'
+  scanner-lint:
+    description: >-
+      Use community scanner lint rulesets (stylelint + eslint-plugin-obsidianmd)
+      instead of project config. Always forced to true in release mode.
+    required: false
+    default: 'false'
+  node-version:
+    description: >-
+      Node.js version to use. Minimum enforced: 20.
+    required: false
+    default: '24'
 
-# Define your outputs here.
 outputs:
-  time:
-    description: Your output description here
+  type:
+    description: Detected or specified project type (plugin or theme).
+  validation-passed:
+    description: Whether all validation checks passed (true or false).
+  release-url:
+    description: URL of the created draft release (release mode only).
 
 runs:
   using: node24

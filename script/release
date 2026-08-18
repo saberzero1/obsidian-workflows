@@ -9,7 +9,7 @@ set -e
 # This is a helper script to tag and push a new release. GitHub Actions use
 # release tags to allow users to select a specific version of the action to use.
 #
-# See: https://github.com/actions/typescript-action#publishing-a-new-release
+# See: https://github.com/saberzero1/obsidian-workflows#publishing-a-new-release
 # See: https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#recommendations
 #
 # This script will do the following:
