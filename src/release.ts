@@ -3,15 +3,17 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
-import { attestProvenance } from '@actions/attest'
+import { attest, buildSLSAProvenancePredicate } from '@actions/attest'
+import * as github from '@actions/github'
 import { readManifest } from './detect.js'
 import type { ProjectType, ValidationResult } from './types.js'
 
 type SigstoreInstance = 'public-good' | 'github'
 
 function getSigstoreInstance(): SigstoreInstance {
-  const repoVisibility = process.env.GITHUB_REPOSITORY_VISIBILITY ?? ''
-  return repoVisibility === 'public' ? 'public-good' : 'github'
+  return github.context.payload.repository?.visibility === 'public'
+    ? 'public-good'
+    : 'github'
 }
 
 function getTagFromRef(): string | null {
@@ -142,40 +144,57 @@ export async function attestBuildArtifacts(
     return results
   }
 
-  const token = process.env.GITHUB_TOKEN ?? ''
-  if (!token) {
+  if (!process.env.ACTIONS_ID_TOKEN_REQUEST_URL) {
     results.push({
       message:
-        'GITHUB_TOKEN not set. Attestation requires a token with id-token:write and attestations:write permissions.',
+        'Missing id-token permission. Add "permissions: id-token: write" to your workflow.',
       severity: 'warning',
       check: 'release'
     })
     return results
   }
 
-  for (const subject of subjects) {
-    const digest = computeSha256(subject.filePath)
-    core.info(`Attesting ${subject.name} (sha256:${digest})...`)
+  const token = process.env.GITHUB_TOKEN ?? ''
+  if (!token) {
+    results.push({
+      message:
+        'GITHUB_TOKEN not set. Attestation requires a token with attestations:write permission.',
+      severity: 'warning',
+      check: 'release'
+    })
+    return results
+  }
 
-    try {
-      const attestation = await attestProvenance({
-        subjectName: subject.name,
-        subjectDigest: { sha256: digest },
-        token,
-        sigstore: getSigstoreInstance()
-      })
+  const sigstoreInstance = getSigstoreInstance()
+  const subjectDigests = subjects.map((s) => ({
+    name: s.name,
+    digest: { sha256: computeSha256(s.filePath) }
+  }))
 
-      core.info(
-        `Attestation created for ${subject.name} (ID: ${attestation.attestationID})`
-      )
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error)
-      results.push({
-        message: `Attestation failed for ${subject.name}: ${message}. Ensure the workflow has id-token:write and attestations:write permissions.`,
-        severity: 'warning',
-        check: 'release'
-      })
-    }
+  core.info(
+    `Attesting build artifacts: ${subjects.map((s) => s.name).join(', ')}`
+  )
+  core.info(`Sigstore instance: ${sigstoreInstance}`)
+
+  try {
+    const predicate = await buildSLSAProvenancePredicate()
+
+    const attestation = await attest({
+      subjects: subjectDigests,
+      predicateType: predicate.type,
+      predicate: predicate.params,
+      sigstore: sigstoreInstance,
+      token
+    })
+
+    core.info(`Attestation created (ID: ${attestation.attestationID})`)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    results.push({
+      message: `Attestation failed: ${message}. Ensure the workflow has id-token:write and attestations:write permissions.`,
+      severity: 'warning',
+      check: 'release'
+    })
   }
 
   return results
