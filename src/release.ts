@@ -3,7 +3,7 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
-import { attest } from '@actions/attest'
+import { attestProvenance } from '@actions/attest'
 import { readManifest } from './detect.js'
 import type { ProjectType, ValidationResult } from './types.js'
 
@@ -156,20 +156,8 @@ export async function attestBuildArtifacts(
   )
 
   try {
-    const attestation = await attest({
+    const attestation = await attestProvenance({
       subjects: subjectDigests,
-      predicateType: 'https://slsa.dev/provenance/v1',
-      predicate: {
-        buildType: 'https://github.com/saberzero1/obsidian-workflows@v1',
-        builder: { id: 'https://github.com/saberzero1/obsidian-workflows' },
-        invocation: {
-          configSource: {
-            uri: `git+${process.env.GITHUB_SERVER_URL ?? 'https://github.com'}/${process.env.GITHUB_REPOSITORY ?? ''}`,
-            digest: { sha1: process.env.GITHUB_SHA ?? '' },
-            entryPoint: process.env.GITHUB_WORKFLOW ?? ''
-          }
-        }
-      },
       token,
       sigstore: 'github'
     })
