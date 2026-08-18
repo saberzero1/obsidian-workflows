@@ -1,0 +1,49 @@
+name: Obsidian Release
+
+on:
+  workflow_call:
+    inputs:
+      type:
+        description: 'Project type: plugin, theme, or auto'
+        type: string
+        required: false
+        default: 'auto'
+      build:
+        description:
+          'Explicit build command override. Set to "false" to disable.'
+        type: string
+        required: false
+        default: ''
+      node-version:
+        description: 'Node.js version (minimum: 20)'
+        type: string
+        required: false
+        default: '24'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: npm
+
+      - name: Validate, build, and release
+        uses: saberzero1/obsidian-workflows@v1
+        with:
+          type: ${{ inputs.type }}
+          mode: release
+          build: ${{ inputs.build }}
+          lint: 'true'
+          scanner-lint: 'true'
+          node-version: ${{ inputs.node-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

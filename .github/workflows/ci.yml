@@ -44,8 +44,8 @@ jobs:
         id: npm-ci-test
         run: npm run ci-test
 
-  test-action:
-    name: GitHub Actions Test
+  test-action-plugin:
+    name: Test Action (Plugin Fixture)
     runs-on: ubuntu-latest
 
     steps:
@@ -53,12 +53,57 @@ jobs:
         id: checkout
         uses: actions/checkout@v6
 
-      - name: Test Local Action
+      - name: Copy plugin fixture to workspace root
+        run: |
+          cp __fixtures__/sample-plugin/manifest.json .
+          cp __fixtures__/sample-plugin/versions.json .
+          cp __fixtures__/sample-plugin/README.md .
+          cp __fixtures__/sample-plugin/LICENSE .
+
+      - name: Test Local Action (plugin)
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
+          type: auto
+          mode: pr
+          lint: 'false'
+          build: 'false'
 
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+      - name: Verify outputs
+        run: |
+          echo "Detected type: ${{ steps.test-action.outputs.type }}"
+          echo "Validation passed: ${{ steps.test-action.outputs.validation-passed }}"
+          test "${{ steps.test-action.outputs.type }}" = "plugin"
+          test "${{ steps.test-action.outputs.validation-passed }}" = "true"
+
+  test-action-theme:
+    name: Test Action (Theme Fixture)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v6
+
+      - name: Copy theme fixture to workspace root
+        run: |
+          cp __fixtures__/sample-theme/manifest.json .
+          cp __fixtures__/sample-theme/theme.css .
+          cp __fixtures__/sample-theme/README.md .
+          cp __fixtures__/sample-theme/LICENSE .
+
+      - name: Test Local Action (theme)
+        id: test-action
+        uses: ./
+        with:
+          type: auto
+          mode: pr
+          lint: 'false'
+          build: 'false'
+
+      - name: Verify outputs
+        run: |
+          echo "Detected type: ${{ steps.test-action.outputs.type }}"
+          echo "Validation passed: ${{ steps.test-action.outputs.validation-passed }}"
+          test "${{ steps.test-action.outputs.type }}" = "theme"
+          test "${{ steps.test-action.outputs.validation-passed }}" = "true"

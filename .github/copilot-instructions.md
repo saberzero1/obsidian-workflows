@@ -1,13 +1,14 @@
 # Copilot Instructions
 
-This GitHub Action is written in TypeScript and transpiled to JavaScript. Both
-the TypeScript sources and the **generated** JavaScript code are contained in
-this repository. The TypeScript sources are contained in the `src` directory and
-the JavaScript code is contained in the `dist` directory. A GitHub Actions
-workflow checks that the JavaScript code in `dist` is up-to-date. Therefore, you
-should not review any changes to the contents of the `dist` folder and it is
-expected that the JavaScript code in `dist` closely mirrors the TypeScript code
-it is generated from.
+This GitHub Action validates, lints, builds, and releases Obsidian plugins and
+themes. It is written in TypeScript and transpiled to JavaScript. Both the
+TypeScript sources and the **generated** JavaScript code are contained in this
+repository. The TypeScript sources are contained in the `src` directory and the
+JavaScript code is contained in the `dist` directory. A GitHub Actions workflow
+checks that the JavaScript code in `dist` is up-to-date. Therefore, you should
+not review any changes to the contents of the `dist` folder and it is expected
+that the JavaScript code in `dist` closely mirrors the TypeScript code it is
+generated from.
 
 ## Repository Structure
 
@@ -22,6 +23,15 @@ it is generated from.
 | `badges/`            | Badges for readme                                        |
 | `dist/`              | Generated JavaScript Code                                |
 | `src/`               | TypeScript Source Code                                   |
+| `src/types.ts`       | Shared types and manifest interfaces                     |
+| `src/detect.ts`      | Project type detection (plugin vs theme)                 |
+| `src/manifest.ts`    | Manifest and versions.json validation                    |
+| `src/repo-checks.ts` | License and readme validation                            |
+| `src/build.ts`       | Build step auto-detection and execution                  |
+| `src/lint.ts`        | Lint integration (user config and scanner rulesets)      |
+| `src/release.ts`     | Release asset validation, attestation, draft release     |
+| `src/main.ts`        | Action orchestrator                                      |
+| `src/index.ts`       | Entry point                                              |
 | `.env.example`       | Environment Variables Example for `@github/local-action` |
 | `.licensed.yml`      | Licensed Configuration                                   |
 | `.markdown-lint.yml` | Markdown Linter Configuration                            |
@@ -71,15 +81,12 @@ npm run bundle
 - Follow standard TypeScript and JavaScript coding conventions and best
   practices
 - Changes should maintain consistency with existing patterns and style
-- Document changes clearly and thoroughly, including updates to existing
-  comments when appropriate
 - Do not include basic, unnecessary comments that simply restate what the code
   is doing (focus on explaining _why_, not _what_)
 - Use consistent error handling patterns throughout the codebase
 - Use TypeScript's type system to ensure type safety and clarity
 - Keep functions focused and manageable
 - Use descriptive variable and function names that clearly convey their purpose
-- Use JSDoc comments to document functions, classes, and complex logic
 - After doing any refactoring, ensure to run `npm run test` to ensure that all
   tests still pass and coverage requirements are met
 - When suggesting code changes, always opt for the most maintainable approach.
