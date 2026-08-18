@@ -7,6 +7,44 @@ import type { ProjectType, ValidationResult } from './types.js'
 const SCANNER_STYLELINT_CONFIG = {
   plugins: ['stylelint-no-unsupported-browser-features'],
   ignoreDisables: true,
+  ignoreFiles: [
+    'node_modules',
+    'dist',
+    'build',
+    'pkg',
+    'test-vault',
+    '.obsidian',
+    '**/.obsidian/**',
+    'esbuild.config.mjs',
+    'version-bump.mjs',
+    '**/*.test.*',
+    '**/*.tests.*',
+    '**/*.spec.*',
+    '**/*.specs.*',
+    '**/test/**',
+    '**/tests/**',
+    '**/__tests__/**',
+    '**/mocks/**',
+    '**/__mocks__/**',
+    '**/*.cjs',
+    '**/*.mjs',
+    '**/*.cts',
+    '**/*.mts',
+    '**/vite*',
+    '**/scripts/**',
+    '**/docs/**',
+    '**/i18n/**',
+    '**/i18next/**',
+    '**/locale/**',
+    '**/locales/**',
+    '**/translations/**',
+    '**/l10n/**',
+    '.pnpm-store',
+    '**/*.spec.ts',
+    '**/testUtils**',
+    'automation/**',
+    'e2e-tests/**'
+  ],
   rules: {
     'function-url-scheme-disallowed-list': [
       ['http', 'https', 'file'],
@@ -87,7 +125,11 @@ const SCANNER_STYLELINT_DEPS = [
   'stylelint-no-unsupported-browser-features@8'
 ]
 
-const SCANNER_ESLINT_DEPS = ['eslint@9', 'eslint-plugin-obsidianmd@latest']
+const SCANNER_ESLINT_DEPS = [
+  'eslint@9',
+  'eslint-plugin-obsidianmd@0.4.1',
+  'typescript-eslint@8'
+]
 
 async function installLintDeps(
   deps: string[],
@@ -177,18 +219,7 @@ async function runScannerStylelint(
   core.info('Running scanner stylelint...')
   const exitCode = await exec.exec(
     'npx',
-    [
-      'stylelint',
-      ...existingFiles,
-      '--config',
-      configPath,
-      '--ignore-path',
-      '/dev/null',
-      '--ignore-pattern',
-      'node_modules',
-      '--ignore-pattern',
-      'dist'
-    ],
+    ['stylelint', ...existingFiles, '--config', configPath],
     {
       cwd: workspacePath,
       ignoreReturnCode: true
@@ -215,35 +246,16 @@ async function runScannerStylelint(
   return results
 }
 
-async function runScannerEslint(
-  workspacePath: string
-): Promise<ValidationResult[]> {
-  const results: ValidationResult[] = []
+function buildScannerEslintConfig(hasTsconfig: boolean): string {
+  if (!hasTsconfig) {
+    return `import obsidianmd from "eslint-plugin-obsidianmd";
+import { globalIgnores } from "eslint/config";
 
-  const hasTsconfig = fs.existsSync(path.join(workspacePath, 'tsconfig.json'))
+const IGNORES = ${JSON.stringify(SCANNER_STYLELINT_CONFIG.ignoreFiles)};
 
-  core.info('Installing scanner ESLint dependencies...')
-  const deps = [...SCANNER_ESLINT_DEPS]
-  if (hasTsconfig) {
-    deps.push('typescript-eslint@8')
-  }
-
-  const installed = await installLintDeps(deps, workspacePath)
-  if (!installed) {
-    results.push({
-      message: 'Failed to install scanner ESLint dependencies.',
-      severity: 'error',
-      check: 'lint'
-    })
-    return results
-  }
-
-  const configContent = hasTsconfig
-    ? `import obsidianmd from "eslint-plugin-obsidianmd";
-export default [...obsidianmd.configs.recommended];
-`
-    : `import obsidianmd from "eslint-plugin-obsidianmd";
 export default [
+  globalIgnores(IGNORES),
+  { ignores: ["eslint.config.scanner.mjs"] },
   ...obsidianmd.configs.recommended.map(config => {
     if (config.rules) {
       const filtered = { ...config.rules };
@@ -259,7 +271,146 @@ export default [
   })
 ];
 `
+  }
 
+  return `import { cwd } from "node:process";
+import { globalIgnores } from "eslint/config";
+import obsidianmd from "eslint-plugin-obsidianmd";
+import tseslint from "typescript-eslint";
+
+const IGNORES = ${JSON.stringify(SCANNER_STYLELINT_CONFIG.ignoreFiles)};
+
+function toWarns(config) {
+  if (!config) return config;
+  if (!Array.isArray(config) && typeof config[Symbol.iterator] === "function") {
+    return [...config].map(toWarns);
+  }
+  if (Array.isArray(config)) return config.map(toWarns);
+  const result = { ...config };
+  if (result.extends) result.extends = toWarns(result.extends);
+  if (result.rules) {
+    result.rules = Object.fromEntries(
+      Object.entries(result.rules).map(([key, value]) => {
+        if (key.startsWith("eslint-comments/")) return [key, value];
+        if (value === "error" || value === 2) return [key, "warn"];
+        if (Array.isArray(value) && (value[0] === "error" || value[0] === 2)) return [key, ["warn", ...value.slice(1)]];
+        return [key, value];
+      })
+    );
+  }
+  return result;
+}
+
+export default [
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: [
+            "eslint.config.js",
+            "manifest.json"
+          ]
+        },
+        tsconfigRootDir: cwd(),
+        extraFileExtensions: [".json"]
+      },
+    },
+  },
+  ...toWarns(obsidianmd.configs.recommended),
+  {
+    files: ["**/*.{ts,cts,mts,tsx,js,cjs,mjs,jsx}"],
+    rules: {
+      "no-eval": "error",
+      "no-implied-eval": "error",
+      "no-unsanitized/method": "error",
+      "no-unsanitized/property": "error",
+      "obsidianmd/regex-lookbehind": "error",
+      "obsidianmd/no-forbidden-elements": "error",
+
+      "no-undef": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
+      "@typescript-eslint/restrict-template-expressions": "off",
+      "@typescript-eslint/no-base-to-string": "off",
+      "import/no-unresolved": "off",
+
+      "obsidianmd/validate-manifest": "off",
+      "obsidianmd/validate-license": "off",
+
+      "obsidianmd/commands/no-command-in-command-id": "off",
+      "obsidianmd/commands/no-plugin-id-in-command-id": "off",
+    }
+  },
+  {
+    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "manifest.json"],
+    rules: {
+      "obsidianmd/ui/sentence-case": "off",
+      "obsidianmd/ui/sentence-case-json": "off",
+      "obsidianmd/ui/sentence-case-locale-module": "off",
+    }
+  },
+  {
+    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+    rules: {
+      "eslint-comments/require-description": "error",
+    }
+  },
+  {
+    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+    plugins: {
+      "@typescript-eslint": tseslint.plugin,
+      "obsidianmd": obsidianmd,
+    },
+    rules: {
+      "@typescript-eslint/no-unsafe-member-access": "warn",
+      "@typescript-eslint/no-unsafe-assignment": "warn",
+      "@typescript-eslint/no-unsafe-argument": "warn",
+      "@typescript-eslint/no-unsafe-call": "warn",
+      "@typescript-eslint/no-unsafe-return": "warn",
+
+      "obsidianmd/commands/no-command-in-command-id": "warn",
+      "obsidianmd/commands/no-plugin-id-in-command-id": "warn",
+
+      "obsidianmd/settings-tab/no-manual-html-headings": "error",
+      "obsidianmd/settings-tab/no-problematic-settings-headings": "error",
+      "obsidianmd/sample-names": "error",
+      "obsidianmd/no-sample-code": "error",
+      "obsidianmd/platform": "error",
+      "obsidianmd/no-plugin-as-component": "error",
+      "obsidianmd/detach-leaves": "error",
+      "obsidianmd/no-static-styles-assignment": "error",
+      "obsidianmd/no-view-references-in-plugin": "error",
+      "obsidianmd/no-unsupported-api": "error",
+    }
+  },
+  globalIgnores(IGNORES),
+  { ignores: ["eslint.config.scanner.mjs"] },
+];
+`
+}
+
+async function runScannerEslint(
+  workspacePath: string
+): Promise<ValidationResult[]> {
+  const results: ValidationResult[] = []
+
+  const hasTsconfig = fs.existsSync(path.join(workspacePath, 'tsconfig.json'))
+
+  core.info('Installing scanner ESLint dependencies...')
+  const installed = await installLintDeps(SCANNER_ESLINT_DEPS, workspacePath)
+  if (!installed) {
+    results.push({
+      message: 'Failed to install scanner ESLint dependencies.',
+      severity: 'error',
+      check: 'lint'
+    })
+    return results
+  }
+
+  const configContent = buildScannerEslintConfig(hasTsconfig)
   const configPath = path.join(workspacePath, 'eslint.config.scanner.mjs')
   fs.writeFileSync(configPath, configContent)
 
