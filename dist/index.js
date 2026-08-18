@@ -3591,9 +3591,9 @@ var hasRequiredConstants$8;
 function requireConstants$8 () {
 	if (hasRequiredConstants$8) return constants$8;
 	hasRequiredConstants$8 = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.SPECIAL_HEADERS = exports$1.HEADER_STATE = exports$1.MINOR = exports$1.MAJOR = exports$1.CONNECTION_TOKEN_CHARS = exports$1.HEADER_CHARS = exports$1.TOKEN = exports$1.STRICT_TOKEN = exports$1.HEX = exports$1.URL_CHAR = exports$1.STRICT_URL_CHAR = exports$1.USERINFO_CHARS = exports$1.MARK = exports$1.ALPHANUM = exports$1.NUM = exports$1.HEX_MAP = exports$1.NUM_MAP = exports$1.ALPHA = exports$1.FINISH = exports$1.H_METHOD_MAP = exports$1.METHOD_MAP = exports$1.METHODS_RTSP = exports$1.METHODS_ICE = exports$1.METHODS_HTTP = exports$1.METHODS = exports$1.LENIENT_FLAGS = exports$1.FLAGS = exports$1.TYPE = exports$1.ERROR = void 0;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.SPECIAL_HEADERS = exports.HEADER_STATE = exports.MINOR = exports.MAJOR = exports.CONNECTION_TOKEN_CHARS = exports.HEADER_CHARS = exports.TOKEN = exports.STRICT_TOKEN = exports.HEX = exports.URL_CHAR = exports.STRICT_URL_CHAR = exports.USERINFO_CHARS = exports.MARK = exports.ALPHANUM = exports.NUM = exports.HEX_MAP = exports.NUM_MAP = exports.ALPHA = exports.FINISH = exports.H_METHOD_MAP = exports.METHOD_MAP = exports.METHODS_RTSP = exports.METHODS_ICE = exports.METHODS_HTTP = exports.METHODS = exports.LENIENT_FLAGS = exports.FLAGS = exports.TYPE = exports.ERROR = void 0;
 		const utils_1 = requireUtils$1();
 		(function (ERROR) {
 		    ERROR[ERROR["OK"] = 0] = "OK";
@@ -3621,12 +3621,12 @@ function requireConstants$8 () {
 		    ERROR[ERROR["PAUSED_UPGRADE"] = 22] = "PAUSED_UPGRADE";
 		    ERROR[ERROR["PAUSED_H2_UPGRADE"] = 23] = "PAUSED_H2_UPGRADE";
 		    ERROR[ERROR["USER"] = 24] = "USER";
-		})(exports$1.ERROR || (exports$1.ERROR = {}));
+		})(exports.ERROR || (exports.ERROR = {}));
 		(function (TYPE) {
 		    TYPE[TYPE["BOTH"] = 0] = "BOTH";
 		    TYPE[TYPE["REQUEST"] = 1] = "REQUEST";
 		    TYPE[TYPE["RESPONSE"] = 2] = "RESPONSE";
-		})(exports$1.TYPE || (exports$1.TYPE = {}));
+		})(exports.TYPE || (exports.TYPE = {}));
 		(function (FLAGS) {
 		    FLAGS[FLAGS["CONNECTION_KEEP_ALIVE"] = 1] = "CONNECTION_KEEP_ALIVE";
 		    FLAGS[FLAGS["CONNECTION_CLOSE"] = 2] = "CONNECTION_CLOSE";
@@ -3638,12 +3638,12 @@ function requireConstants$8 () {
 		    FLAGS[FLAGS["TRAILING"] = 128] = "TRAILING";
 		    // 1 << 8 is unused
 		    FLAGS[FLAGS["TRANSFER_ENCODING"] = 512] = "TRANSFER_ENCODING";
-		})(exports$1.FLAGS || (exports$1.FLAGS = {}));
+		})(exports.FLAGS || (exports.FLAGS = {}));
 		(function (LENIENT_FLAGS) {
 		    LENIENT_FLAGS[LENIENT_FLAGS["HEADERS"] = 1] = "HEADERS";
 		    LENIENT_FLAGS[LENIENT_FLAGS["CHUNKED_LENGTH"] = 2] = "CHUNKED_LENGTH";
 		    LENIENT_FLAGS[LENIENT_FLAGS["KEEP_ALIVE"] = 4] = "KEEP_ALIVE";
-		})(exports$1.LENIENT_FLAGS || (exports$1.LENIENT_FLAGS = {}));
+		})(exports.LENIENT_FLAGS || (exports.LENIENT_FLAGS = {}));
 		var METHODS;
 		(function (METHODS) {
 		    METHODS[METHODS["DELETE"] = 0] = "DELETE";
@@ -3703,8 +3703,8 @@ function requireConstants$8 () {
 		    METHODS[METHODS["RECORD"] = 44] = "RECORD";
 		    /* RAOP */
 		    METHODS[METHODS["FLUSH"] = 45] = "FLUSH";
-		})(METHODS = exports$1.METHODS || (exports$1.METHODS = {}));
-		exports$1.METHODS_HTTP = [
+		})(METHODS = exports.METHODS || (exports.METHODS = {}));
+		exports.METHODS_HTTP = [
 		    METHODS.DELETE,
 		    METHODS.GET,
 		    METHODS.HEAD,
@@ -3742,10 +3742,10 @@ function requireConstants$8 () {
 		    // TODO(indutny): should we allow it with HTTP?
 		    METHODS.SOURCE,
 		];
-		exports$1.METHODS_ICE = [
+		exports.METHODS_ICE = [
 		    METHODS.SOURCE,
 		];
-		exports$1.METHODS_RTSP = [
+		exports.METHODS_RTSP = [
 		    METHODS.OPTIONS,
 		    METHODS.DESCRIBE,
 		    METHODS.ANNOUNCE,
@@ -3762,59 +3762,59 @@ function requireConstants$8 () {
 		    METHODS.GET,
 		    METHODS.POST,
 		];
-		exports$1.METHOD_MAP = utils_1.enumToMap(METHODS);
-		exports$1.H_METHOD_MAP = {};
-		Object.keys(exports$1.METHOD_MAP).forEach((key) => {
+		exports.METHOD_MAP = utils_1.enumToMap(METHODS);
+		exports.H_METHOD_MAP = {};
+		Object.keys(exports.METHOD_MAP).forEach((key) => {
 		    if (/^H/.test(key)) {
-		        exports$1.H_METHOD_MAP[key] = exports$1.METHOD_MAP[key];
+		        exports.H_METHOD_MAP[key] = exports.METHOD_MAP[key];
 		    }
 		});
 		(function (FINISH) {
 		    FINISH[FINISH["SAFE"] = 0] = "SAFE";
 		    FINISH[FINISH["SAFE_WITH_CB"] = 1] = "SAFE_WITH_CB";
 		    FINISH[FINISH["UNSAFE"] = 2] = "UNSAFE";
-		})(exports$1.FINISH || (exports$1.FINISH = {}));
-		exports$1.ALPHA = [];
+		})(exports.FINISH || (exports.FINISH = {}));
+		exports.ALPHA = [];
 		for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
 		    // Upper case
-		    exports$1.ALPHA.push(String.fromCharCode(i));
+		    exports.ALPHA.push(String.fromCharCode(i));
 		    // Lower case
-		    exports$1.ALPHA.push(String.fromCharCode(i + 0x20));
+		    exports.ALPHA.push(String.fromCharCode(i + 0x20));
 		}
-		exports$1.NUM_MAP = {
+		exports.NUM_MAP = {
 		    0: 0, 1: 1, 2: 2, 3: 3, 4: 4,
 		    5: 5, 6: 6, 7: 7, 8: 8, 9: 9,
 		};
-		exports$1.HEX_MAP = {
+		exports.HEX_MAP = {
 		    0: 0, 1: 1, 2: 2, 3: 3, 4: 4,
 		    5: 5, 6: 6, 7: 7, 8: 8, 9: 9,
 		    A: 0XA, B: 0XB, C: 0XC, D: 0XD, E: 0XE, F: 0XF,
 		    a: 0xa, b: 0xb, c: 0xc, d: 0xd, e: 0xe, f: 0xf,
 		};
-		exports$1.NUM = [
+		exports.NUM = [
 		    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 		];
-		exports$1.ALPHANUM = exports$1.ALPHA.concat(exports$1.NUM);
-		exports$1.MARK = ['-', '_', '.', '!', '~', '*', '\'', '(', ')'];
-		exports$1.USERINFO_CHARS = exports$1.ALPHANUM
-		    .concat(exports$1.MARK)
+		exports.ALPHANUM = exports.ALPHA.concat(exports.NUM);
+		exports.MARK = ['-', '_', '.', '!', '~', '*', '\'', '(', ')'];
+		exports.USERINFO_CHARS = exports.ALPHANUM
+		    .concat(exports.MARK)
 		    .concat(['%', ';', ':', '&', '=', '+', '$', ',']);
 		// TODO(indutny): use RFC
-		exports$1.STRICT_URL_CHAR = [
+		exports.STRICT_URL_CHAR = [
 		    '!', '"', '$', '%', '&', '\'',
 		    '(', ')', '*', '+', ',', '-', '.', '/',
 		    ':', ';', '<', '=', '>',
 		    '@', '[', '\\', ']', '^', '_',
 		    '`',
 		    '{', '|', '}', '~',
-		].concat(exports$1.ALPHANUM);
-		exports$1.URL_CHAR = exports$1.STRICT_URL_CHAR
+		].concat(exports.ALPHANUM);
+		exports.URL_CHAR = exports.STRICT_URL_CHAR
 		    .concat(['\t', '\f']);
 		// All characters with 0x80 bit set to 1
 		for (let i = 0x80; i <= 0xff; i++) {
-		    exports$1.URL_CHAR.push(i);
+		    exports.URL_CHAR.push(i);
 		}
-		exports$1.HEX = exports$1.NUM.concat(['a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F']);
+		exports.HEX = exports.NUM.concat(['a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F']);
 		/* Tokens as defined by rfc 2616. Also lowercases them.
 		 *        token       = 1*<any CHAR except CTLs or separators>
 		 *     separators     = "(" | ")" | "<" | ">" | "@"
@@ -3822,27 +3822,27 @@ function requireConstants$8 () {
 		 *                    | "/" | "[" | "]" | "?" | "="
 		 *                    | "{" | "}" | SP | HT
 		 */
-		exports$1.STRICT_TOKEN = [
+		exports.STRICT_TOKEN = [
 		    '!', '#', '$', '%', '&', '\'',
 		    '*', '+', '-', '.',
 		    '^', '_', '`',
 		    '|', '~',
-		].concat(exports$1.ALPHANUM);
-		exports$1.TOKEN = exports$1.STRICT_TOKEN.concat([' ']);
+		].concat(exports.ALPHANUM);
+		exports.TOKEN = exports.STRICT_TOKEN.concat([' ']);
 		/*
 		 * Verify that a char is a valid visible (printable) US-ASCII
 		 * character or %x80-FF
 		 */
-		exports$1.HEADER_CHARS = ['\t'];
+		exports.HEADER_CHARS = ['\t'];
 		for (let i = 32; i <= 255; i++) {
 		    if (i !== 127) {
-		        exports$1.HEADER_CHARS.push(i);
+		        exports.HEADER_CHARS.push(i);
 		    }
 		}
 		// ',' = \x44
-		exports$1.CONNECTION_TOKEN_CHARS = exports$1.HEADER_CHARS.filter((c) => c !== 44);
-		exports$1.MAJOR = exports$1.NUM_MAP;
-		exports$1.MINOR = exports$1.MAJOR;
+		exports.CONNECTION_TOKEN_CHARS = exports.HEADER_CHARS.filter((c) => c !== 44);
+		exports.MAJOR = exports.NUM_MAP;
+		exports.MINOR = exports.MAJOR;
 		var HEADER_STATE;
 		(function (HEADER_STATE) {
 		    HEADER_STATE[HEADER_STATE["GENERAL"] = 0] = "GENERAL";
@@ -3854,8 +3854,8 @@ function requireConstants$8 () {
 		    HEADER_STATE[HEADER_STATE["CONNECTION_CLOSE"] = 6] = "CONNECTION_CLOSE";
 		    HEADER_STATE[HEADER_STATE["CONNECTION_UPGRADE"] = 7] = "CONNECTION_UPGRADE";
 		    HEADER_STATE[HEADER_STATE["TRANSFER_ENCODING_CHUNKED"] = 8] = "TRANSFER_ENCODING_CHUNKED";
-		})(HEADER_STATE = exports$1.HEADER_STATE || (exports$1.HEADER_STATE = {}));
-		exports$1.SPECIAL_HEADERS = {
+		})(HEADER_STATE = exports.HEADER_STATE || (exports.HEADER_STATE = {}));
+		exports.SPECIAL_HEADERS = {
 		    'connection': HEADER_STATE.CONNECTION,
 		    'content-length': HEADER_STATE.CONTENT_LENGTH,
 		    'proxy-connection': HEADER_STATE.CONNECTION,
@@ -8746,10 +8746,10 @@ function requireClientH1 () {
 	const TIMEOUT_KEEP_ALIVE = 8 | USE_NATIVE_TIMER;
 
 	class Parser {
-	  constructor (client, socket, { exports: exports$1 }) {
+	  constructor (client, socket, { exports }) {
 	    assert(Number.isFinite(client[kMaxHeadersSize]) && client[kMaxHeadersSize] > 0);
 
-	    this.llhttp = exports$1;
+	    this.llhttp = exports;
 	    this.ptr = this.llhttp.llhttp_alloc(constants.TYPE.RESPONSE);
 	    this.client = client;
 	    this.socket = socket;
@@ -28611,7 +28611,7 @@ var hasRequiredIoUtil;
 function requireIoUtil () {
 	if (hasRequiredIoUtil) return ioUtil;
 	hasRequiredIoUtil = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (ioUtil && ioUtil.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -28641,22 +28641,22 @@ function requireIoUtil () {
 		    });
 		};
 		var _a;
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.getCmdPath = exports$1.tryGetExecutablePath = exports$1.isRooted = exports$1.isDirectory = exports$1.exists = exports$1.READONLY = exports$1.UV_FS_O_EXLOCK = exports$1.IS_WINDOWS = exports$1.unlink = exports$1.symlink = exports$1.stat = exports$1.rmdir = exports$1.rm = exports$1.rename = exports$1.readlink = exports$1.readdir = exports$1.open = exports$1.mkdir = exports$1.lstat = exports$1.copyFile = exports$1.chmod = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.getCmdPath = exports.tryGetExecutablePath = exports.isRooted = exports.isDirectory = exports.exists = exports.READONLY = exports.UV_FS_O_EXLOCK = exports.IS_WINDOWS = exports.unlink = exports.symlink = exports.stat = exports.rmdir = exports.rm = exports.rename = exports.readlink = exports.readdir = exports.open = exports.mkdir = exports.lstat = exports.copyFile = exports.chmod = void 0;
 		const fs = __importStar(fs__default);
 		const path = __importStar(path$2);
 		_a = fs.promises
 		// export const {open} = 'fs'
-		, exports$1.chmod = _a.chmod, exports$1.copyFile = _a.copyFile, exports$1.lstat = _a.lstat, exports$1.mkdir = _a.mkdir, exports$1.open = _a.open, exports$1.readdir = _a.readdir, exports$1.readlink = _a.readlink, exports$1.rename = _a.rename, exports$1.rm = _a.rm, exports$1.rmdir = _a.rmdir, exports$1.stat = _a.stat, exports$1.symlink = _a.symlink, exports$1.unlink = _a.unlink;
+		, exports.chmod = _a.chmod, exports.copyFile = _a.copyFile, exports.lstat = _a.lstat, exports.mkdir = _a.mkdir, exports.open = _a.open, exports.readdir = _a.readdir, exports.readlink = _a.readlink, exports.rename = _a.rename, exports.rm = _a.rm, exports.rmdir = _a.rmdir, exports.stat = _a.stat, exports.symlink = _a.symlink, exports.unlink = _a.unlink;
 		// export const {open} = 'fs'
-		exports$1.IS_WINDOWS = process.platform === 'win32';
+		exports.IS_WINDOWS = process.platform === 'win32';
 		// See https://github.com/nodejs/node/blob/d0153aee367422d0858105abec186da4dff0a0c5/deps/uv/include/uv/win.h#L691
-		exports$1.UV_FS_O_EXLOCK = 0x10000000;
-		exports$1.READONLY = fs.constants.O_RDONLY;
+		exports.UV_FS_O_EXLOCK = 0x10000000;
+		exports.READONLY = fs.constants.O_RDONLY;
 		function exists(fsPath) {
 		    return __awaiter(this, void 0, void 0, function* () {
 		        try {
-		            yield exports$1.stat(fsPath);
+		            yield exports.stat(fsPath);
 		        }
 		        catch (err) {
 		            if (err.code === 'ENOENT') {
@@ -28667,14 +28667,14 @@ function requireIoUtil () {
 		        return true;
 		    });
 		}
-		exports$1.exists = exists;
+		exports.exists = exists;
 		function isDirectory(fsPath, useStat = false) {
 		    return __awaiter(this, void 0, void 0, function* () {
-		        const stats = useStat ? yield exports$1.stat(fsPath) : yield exports$1.lstat(fsPath);
+		        const stats = useStat ? yield exports.stat(fsPath) : yield exports.lstat(fsPath);
 		        return stats.isDirectory();
 		    });
 		}
-		exports$1.isDirectory = isDirectory;
+		exports.isDirectory = isDirectory;
 		/**
 		 * On OSX/Linux, true if path starts with '/'. On Windows, true for paths like:
 		 * \, \hello, \\hello\share, C:, and C:\hello (and corresponding alternate separator cases).
@@ -28684,13 +28684,13 @@ function requireIoUtil () {
 		    if (!p) {
 		        throw new Error('isRooted() parameter "p" cannot be empty');
 		    }
-		    if (exports$1.IS_WINDOWS) {
+		    if (exports.IS_WINDOWS) {
 		        return (p.startsWith('\\') || /^[A-Z]:/i.test(p) // e.g. \ or \hello or \\hello
 		        ); // e.g. C: or C:\hello
 		    }
 		    return p.startsWith('/');
 		}
-		exports$1.isRooted = isRooted;
+		exports.isRooted = isRooted;
 		/**
 		 * Best effort attempt to determine whether a file exists and is executable.
 		 * @param filePath    file path to check
@@ -28702,7 +28702,7 @@ function requireIoUtil () {
 		        let stats = undefined;
 		        try {
 		            // test file exists
-		            stats = yield exports$1.stat(filePath);
+		            stats = yield exports.stat(filePath);
 		        }
 		        catch (err) {
 		            if (err.code !== 'ENOENT') {
@@ -28711,7 +28711,7 @@ function requireIoUtil () {
 		            }
 		        }
 		        if (stats && stats.isFile()) {
-		            if (exports$1.IS_WINDOWS) {
+		            if (exports.IS_WINDOWS) {
 		                // on Windows, test for valid extension
 		                const upperExt = path.extname(filePath).toUpperCase();
 		                if (extensions.some(validExt => validExt.toUpperCase() === upperExt)) {
@@ -28730,7 +28730,7 @@ function requireIoUtil () {
 		            filePath = originalFilePath + extension;
 		            stats = undefined;
 		            try {
-		                stats = yield exports$1.stat(filePath);
+		                stats = yield exports.stat(filePath);
 		            }
 		            catch (err) {
 		                if (err.code !== 'ENOENT') {
@@ -28739,12 +28739,12 @@ function requireIoUtil () {
 		                }
 		            }
 		            if (stats && stats.isFile()) {
-		                if (exports$1.IS_WINDOWS) {
+		                if (exports.IS_WINDOWS) {
 		                    // preserve the case of the actual file (since an extension was appended)
 		                    try {
 		                        const directory = path.dirname(filePath);
 		                        const upperName = path.basename(filePath).toUpperCase();
-		                        for (const actualName of yield exports$1.readdir(directory)) {
+		                        for (const actualName of yield exports.readdir(directory)) {
 		                            if (upperName === actualName.toUpperCase()) {
 		                                filePath = path.join(directory, actualName);
 		                                break;
@@ -28767,10 +28767,10 @@ function requireIoUtil () {
 		        return '';
 		    });
 		}
-		exports$1.tryGetExecutablePath = tryGetExecutablePath;
+		exports.tryGetExecutablePath = tryGetExecutablePath;
 		function normalizeSeparators(p) {
 		    p = p || '';
-		    if (exports$1.IS_WINDOWS) {
+		    if (exports.IS_WINDOWS) {
 		        // convert slashes on Windows
 		        p = p.replace(/\//g, '\\');
 		        // remove redundant slashes
@@ -28792,7 +28792,7 @@ function requireIoUtil () {
 		    var _a;
 		    return (_a = process.env['COMSPEC']) !== null && _a !== void 0 ? _a : `cmd.exe`;
 		}
-		exports$1.getCmdPath = getCmdPath;
+		exports.getCmdPath = getCmdPath;
 		
 	} (ioUtil));
 	return ioUtil;
@@ -35498,7 +35498,7 @@ var hasRequiredLight;
 function requireLight () {
 	if (hasRequiredLight) return light$1.exports;
 	hasRequiredLight = 1;
-	(function (module, exports$1) {
+	(function (module, exports) {
 		(function (global, factory) {
 			module.exports = factory() ;
 		}(light, (function () {
@@ -37206,21 +37206,21 @@ var hasRequiredEnvelope;
 function requireEnvelope () {
 	if (hasRequiredEnvelope) return envelope;
 	hasRequiredEnvelope = 1;
-	(function (exports$1) {
+	(function (exports) {
 		// Code generated by protoc-gen-ts_proto. DO NOT EDIT.
 		// versions:
 		//   protoc-gen-ts_proto  v2.7.0
 		//   protoc               v6.30.2
 		// source: envelope.proto
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.Signature = exports$1.Envelope = void 0;
-		exports$1.Envelope = {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.Signature = exports.Envelope = void 0;
+		exports.Envelope = {
 		    fromJSON(object) {
 		        return {
 		            payload: isSet(object.payload) ? Buffer.from(bytesFromBase64(object.payload)) : Buffer.alloc(0),
 		            payloadType: isSet(object.payloadType) ? globalThis.String(object.payloadType) : "",
 		            signatures: globalThis.Array.isArray(object?.signatures)
-		                ? object.signatures.map((e) => exports$1.Signature.fromJSON(e))
+		                ? object.signatures.map((e) => exports.Signature.fromJSON(e))
 		                : [],
 		        };
 		    },
@@ -37233,12 +37233,12 @@ function requireEnvelope () {
 		            obj.payloadType = message.payloadType;
 		        }
 		        if (message.signatures?.length) {
-		            obj.signatures = message.signatures.map((e) => exports$1.Signature.toJSON(e));
+		            obj.signatures = message.signatures.map((e) => exports.Signature.toJSON(e));
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.Signature = {
+		exports.Signature = {
 		    fromJSON(object) {
 		        return {
 		            sig: isSet(object.sig) ? Buffer.from(bytesFromBase64(object.sig)) : Buffer.alloc(0),
@@ -37316,20 +37316,20 @@ var hasRequiredSigstore_common;
 function requireSigstore_common () {
 	if (hasRequiredSigstore_common) return sigstore_common;
 	hasRequiredSigstore_common = 1;
-	(function (exports$1) {
+	(function (exports) {
 		// Code generated by protoc-gen-ts_proto. DO NOT EDIT.
 		// versions:
 		//   protoc-gen-ts_proto  v2.7.0
 		//   protoc               v6.30.2
 		// source: sigstore_common.proto
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.TimeRange = exports$1.X509CertificateChain = exports$1.SubjectAlternativeName = exports$1.X509Certificate = exports$1.DistinguishedName = exports$1.ObjectIdentifierValuePair = exports$1.ObjectIdentifier = exports$1.PublicKeyIdentifier = exports$1.PublicKey = exports$1.RFC3161SignedTimestamp = exports$1.LogId = exports$1.MessageSignature = exports$1.HashOutput = exports$1.SubjectAlternativeNameType = exports$1.PublicKeyDetails = exports$1.HashAlgorithm = void 0;
-		exports$1.hashAlgorithmFromJSON = hashAlgorithmFromJSON;
-		exports$1.hashAlgorithmToJSON = hashAlgorithmToJSON;
-		exports$1.publicKeyDetailsFromJSON = publicKeyDetailsFromJSON;
-		exports$1.publicKeyDetailsToJSON = publicKeyDetailsToJSON;
-		exports$1.subjectAlternativeNameTypeFromJSON = subjectAlternativeNameTypeFromJSON;
-		exports$1.subjectAlternativeNameTypeToJSON = subjectAlternativeNameTypeToJSON;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TimeRange = exports.X509CertificateChain = exports.SubjectAlternativeName = exports.X509Certificate = exports.DistinguishedName = exports.ObjectIdentifierValuePair = exports.ObjectIdentifier = exports.PublicKeyIdentifier = exports.PublicKey = exports.RFC3161SignedTimestamp = exports.LogId = exports.MessageSignature = exports.HashOutput = exports.SubjectAlternativeNameType = exports.PublicKeyDetails = exports.HashAlgorithm = void 0;
+		exports.hashAlgorithmFromJSON = hashAlgorithmFromJSON;
+		exports.hashAlgorithmToJSON = hashAlgorithmToJSON;
+		exports.publicKeyDetailsFromJSON = publicKeyDetailsFromJSON;
+		exports.publicKeyDetailsToJSON = publicKeyDetailsToJSON;
+		exports.subjectAlternativeNameTypeFromJSON = subjectAlternativeNameTypeFromJSON;
+		exports.subjectAlternativeNameTypeToJSON = subjectAlternativeNameTypeToJSON;
 		/* eslint-disable */
 		const timestamp_1 = requireTimestamp$1();
 		/**
@@ -37349,7 +37349,7 @@ function requireSigstore_common () {
 		    HashAlgorithm[HashAlgorithm["SHA2_512"] = 3] = "SHA2_512";
 		    HashAlgorithm[HashAlgorithm["SHA3_256"] = 4] = "SHA3_256";
 		    HashAlgorithm[HashAlgorithm["SHA3_384"] = 5] = "SHA3_384";
-		})(HashAlgorithm || (exports$1.HashAlgorithm = HashAlgorithm = {}));
+		})(HashAlgorithm || (exports.HashAlgorithm = HashAlgorithm = {}));
 		function hashAlgorithmFromJSON(object) {
 		    switch (object) {
 		        case 0:
@@ -37498,7 +37498,7 @@ function requireSigstore_common () {
 		     */
 		    PublicKeyDetails[PublicKeyDetails["ML_DSA_65"] = 21] = "ML_DSA_65";
 		    PublicKeyDetails[PublicKeyDetails["ML_DSA_87"] = 22] = "ML_DSA_87";
-		})(PublicKeyDetails || (exports$1.PublicKeyDetails = PublicKeyDetails = {}));
+		})(PublicKeyDetails || (exports.PublicKeyDetails = PublicKeyDetails = {}));
 		function publicKeyDetailsFromJSON(object) {
 		    switch (object) {
 		        case 0:
@@ -37637,7 +37637,7 @@ function requireSigstore_common () {
 		     * for more details.
 		     */
 		    SubjectAlternativeNameType[SubjectAlternativeNameType["OTHER_NAME"] = 3] = "OTHER_NAME";
-		})(SubjectAlternativeNameType || (exports$1.SubjectAlternativeNameType = SubjectAlternativeNameType = {}));
+		})(SubjectAlternativeNameType || (exports.SubjectAlternativeNameType = SubjectAlternativeNameType = {}));
 		function subjectAlternativeNameTypeFromJSON(object) {
 		    switch (object) {
 		        case 0:
@@ -37670,7 +37670,7 @@ function requireSigstore_common () {
 		            throw new globalThis.Error("Unrecognized enum value " + object + " for enum SubjectAlternativeNameType");
 		    }
 		}
-		exports$1.HashOutput = {
+		exports.HashOutput = {
 		    fromJSON(object) {
 		        return {
 		            algorithm: isSet(object.algorithm) ? hashAlgorithmFromJSON(object.algorithm) : 0,
@@ -37688,17 +37688,17 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.MessageSignature = {
+		exports.MessageSignature = {
 		    fromJSON(object) {
 		        return {
-		            messageDigest: isSet(object.messageDigest) ? exports$1.HashOutput.fromJSON(object.messageDigest) : undefined,
+		            messageDigest: isSet(object.messageDigest) ? exports.HashOutput.fromJSON(object.messageDigest) : undefined,
 		            signature: isSet(object.signature) ? Buffer.from(bytesFromBase64(object.signature)) : Buffer.alloc(0),
 		        };
 		    },
 		    toJSON(message) {
 		        const obj = {};
 		        if (message.messageDigest !== undefined) {
-		            obj.messageDigest = exports$1.HashOutput.toJSON(message.messageDigest);
+		            obj.messageDigest = exports.HashOutput.toJSON(message.messageDigest);
 		        }
 		        if (message.signature.length !== 0) {
 		            obj.signature = base64FromBytes(message.signature);
@@ -37706,7 +37706,7 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.LogId = {
+		exports.LogId = {
 		    fromJSON(object) {
 		        return { keyId: isSet(object.keyId) ? Buffer.from(bytesFromBase64(object.keyId)) : Buffer.alloc(0) };
 		    },
@@ -37718,7 +37718,7 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.RFC3161SignedTimestamp = {
+		exports.RFC3161SignedTimestamp = {
 		    fromJSON(object) {
 		        return {
 		            signedTimestamp: isSet(object.signedTimestamp)
@@ -37734,12 +37734,12 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.PublicKey = {
+		exports.PublicKey = {
 		    fromJSON(object) {
 		        return {
 		            rawBytes: isSet(object.rawBytes) ? Buffer.from(bytesFromBase64(object.rawBytes)) : undefined,
 		            keyDetails: isSet(object.keyDetails) ? publicKeyDetailsFromJSON(object.keyDetails) : 0,
-		            validFor: isSet(object.validFor) ? exports$1.TimeRange.fromJSON(object.validFor) : undefined,
+		            validFor: isSet(object.validFor) ? exports.TimeRange.fromJSON(object.validFor) : undefined,
 		        };
 		    },
 		    toJSON(message) {
@@ -37751,12 +37751,12 @@ function requireSigstore_common () {
 		            obj.keyDetails = publicKeyDetailsToJSON(message.keyDetails);
 		        }
 		        if (message.validFor !== undefined) {
-		            obj.validFor = exports$1.TimeRange.toJSON(message.validFor);
+		            obj.validFor = exports.TimeRange.toJSON(message.validFor);
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.PublicKeyIdentifier = {
+		exports.PublicKeyIdentifier = {
 		    fromJSON(object) {
 		        return { hint: isSet(object.hint) ? globalThis.String(object.hint) : "" };
 		    },
@@ -37768,7 +37768,7 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.ObjectIdentifier = {
+		exports.ObjectIdentifier = {
 		    fromJSON(object) {
 		        return { id: globalThis.Array.isArray(object?.id) ? object.id.map((e) => globalThis.Number(e)) : [] };
 		    },
@@ -37780,17 +37780,17 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.ObjectIdentifierValuePair = {
+		exports.ObjectIdentifierValuePair = {
 		    fromJSON(object) {
 		        return {
-		            oid: isSet(object.oid) ? exports$1.ObjectIdentifier.fromJSON(object.oid) : undefined,
+		            oid: isSet(object.oid) ? exports.ObjectIdentifier.fromJSON(object.oid) : undefined,
 		            value: isSet(object.value) ? Buffer.from(bytesFromBase64(object.value)) : Buffer.alloc(0),
 		        };
 		    },
 		    toJSON(message) {
 		        const obj = {};
 		        if (message.oid !== undefined) {
-		            obj.oid = exports$1.ObjectIdentifier.toJSON(message.oid);
+		            obj.oid = exports.ObjectIdentifier.toJSON(message.oid);
 		        }
 		        if (message.value.length !== 0) {
 		            obj.value = base64FromBytes(message.value);
@@ -37798,7 +37798,7 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.DistinguishedName = {
+		exports.DistinguishedName = {
 		    fromJSON(object) {
 		        return {
 		            organization: isSet(object.organization) ? globalThis.String(object.organization) : "",
@@ -37816,7 +37816,7 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.X509Certificate = {
+		exports.X509Certificate = {
 		    fromJSON(object) {
 		        return { rawBytes: isSet(object.rawBytes) ? Buffer.from(bytesFromBase64(object.rawBytes)) : Buffer.alloc(0) };
 		    },
@@ -37828,7 +37828,7 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.SubjectAlternativeName = {
+		exports.SubjectAlternativeName = {
 		    fromJSON(object) {
 		        return {
 		            type: isSet(object.type) ? subjectAlternativeNameTypeFromJSON(object.type) : 0,
@@ -37853,23 +37853,23 @@ function requireSigstore_common () {
 		        return obj;
 		    },
 		};
-		exports$1.X509CertificateChain = {
+		exports.X509CertificateChain = {
 		    fromJSON(object) {
 		        return {
 		            certificates: globalThis.Array.isArray(object?.certificates)
-		                ? object.certificates.map((e) => exports$1.X509Certificate.fromJSON(e))
+		                ? object.certificates.map((e) => exports.X509Certificate.fromJSON(e))
 		                : [],
 		        };
 		    },
 		    toJSON(message) {
 		        const obj = {};
 		        if (message.certificates?.length) {
-		            obj.certificates = message.certificates.map((e) => exports$1.X509Certificate.toJSON(e));
+		            obj.certificates = message.certificates.map((e) => exports.X509Certificate.toJSON(e));
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.TimeRange = {
+		exports.TimeRange = {
 		    fromJSON(object) {
 		        return {
 		            start: isSet(object.start) ? fromJsonTimestamp(object.start) : undefined,
@@ -37923,17 +37923,17 @@ var hasRequiredSigstore_rekor;
 function requireSigstore_rekor () {
 	if (hasRequiredSigstore_rekor) return sigstore_rekor;
 	hasRequiredSigstore_rekor = 1;
-	(function (exports$1) {
+	(function (exports) {
 		// Code generated by protoc-gen-ts_proto. DO NOT EDIT.
 		// versions:
 		//   protoc-gen-ts_proto  v2.7.0
 		//   protoc               v6.30.2
 		// source: sigstore_rekor.proto
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.TransparencyLogEntry = exports$1.InclusionPromise = exports$1.InclusionProof = exports$1.Checkpoint = exports$1.KindVersion = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TransparencyLogEntry = exports.InclusionPromise = exports.InclusionProof = exports.Checkpoint = exports.KindVersion = void 0;
 		/* eslint-disable */
 		const sigstore_common_1 = requireSigstore_common();
-		exports$1.KindVersion = {
+		exports.KindVersion = {
 		    fromJSON(object) {
 		        return {
 		            kind: isSet(object.kind) ? globalThis.String(object.kind) : "",
@@ -37951,7 +37951,7 @@ function requireSigstore_rekor () {
 		        return obj;
 		    },
 		};
-		exports$1.Checkpoint = {
+		exports.Checkpoint = {
 		    fromJSON(object) {
 		        return { envelope: isSet(object.envelope) ? globalThis.String(object.envelope) : "" };
 		    },
@@ -37963,7 +37963,7 @@ function requireSigstore_rekor () {
 		        return obj;
 		    },
 		};
-		exports$1.InclusionProof = {
+		exports.InclusionProof = {
 		    fromJSON(object) {
 		        return {
 		            logIndex: isSet(object.logIndex) ? globalThis.String(object.logIndex) : "0",
@@ -37972,7 +37972,7 @@ function requireSigstore_rekor () {
 		            hashes: globalThis.Array.isArray(object?.hashes)
 		                ? object.hashes.map((e) => Buffer.from(bytesFromBase64(e)))
 		                : [],
-		            checkpoint: isSet(object.checkpoint) ? exports$1.Checkpoint.fromJSON(object.checkpoint) : undefined,
+		            checkpoint: isSet(object.checkpoint) ? exports.Checkpoint.fromJSON(object.checkpoint) : undefined,
 		        };
 		    },
 		    toJSON(message) {
@@ -37990,12 +37990,12 @@ function requireSigstore_rekor () {
 		            obj.hashes = message.hashes.map((e) => base64FromBytes(e));
 		        }
 		        if (message.checkpoint !== undefined) {
-		            obj.checkpoint = exports$1.Checkpoint.toJSON(message.checkpoint);
+		            obj.checkpoint = exports.Checkpoint.toJSON(message.checkpoint);
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.InclusionPromise = {
+		exports.InclusionPromise = {
 		    fromJSON(object) {
 		        return {
 		            signedEntryTimestamp: isSet(object.signedEntryTimestamp)
@@ -38011,15 +38011,15 @@ function requireSigstore_rekor () {
 		        return obj;
 		    },
 		};
-		exports$1.TransparencyLogEntry = {
+		exports.TransparencyLogEntry = {
 		    fromJSON(object) {
 		        return {
 		            logIndex: isSet(object.logIndex) ? globalThis.String(object.logIndex) : "0",
 		            logId: isSet(object.logId) ? sigstore_common_1.LogId.fromJSON(object.logId) : undefined,
-		            kindVersion: isSet(object.kindVersion) ? exports$1.KindVersion.fromJSON(object.kindVersion) : undefined,
+		            kindVersion: isSet(object.kindVersion) ? exports.KindVersion.fromJSON(object.kindVersion) : undefined,
 		            integratedTime: isSet(object.integratedTime) ? globalThis.String(object.integratedTime) : "0",
-		            inclusionPromise: isSet(object.inclusionPromise) ? exports$1.InclusionPromise.fromJSON(object.inclusionPromise) : undefined,
-		            inclusionProof: isSet(object.inclusionProof) ? exports$1.InclusionProof.fromJSON(object.inclusionProof) : undefined,
+		            inclusionPromise: isSet(object.inclusionPromise) ? exports.InclusionPromise.fromJSON(object.inclusionPromise) : undefined,
+		            inclusionProof: isSet(object.inclusionProof) ? exports.InclusionProof.fromJSON(object.inclusionProof) : undefined,
 		            canonicalizedBody: isSet(object.canonicalizedBody)
 		                ? Buffer.from(bytesFromBase64(object.canonicalizedBody))
 		                : Buffer.alloc(0),
@@ -38034,16 +38034,16 @@ function requireSigstore_rekor () {
 		            obj.logId = sigstore_common_1.LogId.toJSON(message.logId);
 		        }
 		        if (message.kindVersion !== undefined) {
-		            obj.kindVersion = exports$1.KindVersion.toJSON(message.kindVersion);
+		            obj.kindVersion = exports.KindVersion.toJSON(message.kindVersion);
 		        }
 		        if (message.integratedTime !== "0") {
 		            obj.integratedTime = message.integratedTime;
 		        }
 		        if (message.inclusionPromise !== undefined) {
-		            obj.inclusionPromise = exports$1.InclusionPromise.toJSON(message.inclusionPromise);
+		            obj.inclusionPromise = exports.InclusionPromise.toJSON(message.inclusionPromise);
 		        }
 		        if (message.inclusionProof !== undefined) {
-		            obj.inclusionProof = exports$1.InclusionProof.toJSON(message.inclusionProof);
+		            obj.inclusionProof = exports.InclusionProof.toJSON(message.inclusionProof);
 		        }
 		        if (message.canonicalizedBody.length !== 0) {
 		            obj.canonicalizedBody = base64FromBytes(message.canonicalizedBody);
@@ -38069,19 +38069,19 @@ var hasRequiredSigstore_bundle;
 function requireSigstore_bundle () {
 	if (hasRequiredSigstore_bundle) return sigstore_bundle;
 	hasRequiredSigstore_bundle = 1;
-	(function (exports$1) {
+	(function (exports) {
 		// Code generated by protoc-gen-ts_proto. DO NOT EDIT.
 		// versions:
 		//   protoc-gen-ts_proto  v2.7.0
 		//   protoc               v6.30.2
 		// source: sigstore_bundle.proto
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.Bundle = exports$1.VerificationMaterial = exports$1.TimestampVerificationData = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.Bundle = exports.VerificationMaterial = exports.TimestampVerificationData = void 0;
 		/* eslint-disable */
 		const envelope_1 = requireEnvelope();
 		const sigstore_common_1 = requireSigstore_common();
 		const sigstore_rekor_1 = requireSigstore_rekor();
-		exports$1.TimestampVerificationData = {
+		exports.TimestampVerificationData = {
 		    fromJSON(object) {
 		        return {
 		            rfc3161Timestamps: globalThis.Array.isArray(object?.rfc3161Timestamps)
@@ -38097,7 +38097,7 @@ function requireSigstore_bundle () {
 		        return obj;
 		    },
 		};
-		exports$1.VerificationMaterial = {
+		exports.VerificationMaterial = {
 		    fromJSON(object) {
 		        return {
 		            content: isSet(object.publicKey)
@@ -38114,7 +38114,7 @@ function requireSigstore_bundle () {
 		                ? object.tlogEntries.map((e) => sigstore_rekor_1.TransparencyLogEntry.fromJSON(e))
 		                : [],
 		            timestampVerificationData: isSet(object.timestampVerificationData)
-		                ? exports$1.TimestampVerificationData.fromJSON(object.timestampVerificationData)
+		                ? exports.TimestampVerificationData.fromJSON(object.timestampVerificationData)
 		                : undefined,
 		        };
 		    },
@@ -38133,17 +38133,17 @@ function requireSigstore_bundle () {
 		            obj.tlogEntries = message.tlogEntries.map((e) => sigstore_rekor_1.TransparencyLogEntry.toJSON(e));
 		        }
 		        if (message.timestampVerificationData !== undefined) {
-		            obj.timestampVerificationData = exports$1.TimestampVerificationData.toJSON(message.timestampVerificationData);
+		            obj.timestampVerificationData = exports.TimestampVerificationData.toJSON(message.timestampVerificationData);
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.Bundle = {
+		exports.Bundle = {
 		    fromJSON(object) {
 		        return {
 		            mediaType: isSet(object.mediaType) ? globalThis.String(object.mediaType) : "",
 		            verificationMaterial: isSet(object.verificationMaterial)
-		                ? exports$1.VerificationMaterial.fromJSON(object.verificationMaterial)
+		                ? exports.VerificationMaterial.fromJSON(object.verificationMaterial)
 		                : undefined,
 		            content: isSet(object.messageSignature)
 		                ? { $case: "messageSignature", messageSignature: sigstore_common_1.MessageSignature.fromJSON(object.messageSignature) }
@@ -38158,7 +38158,7 @@ function requireSigstore_bundle () {
 		            obj.mediaType = message.mediaType;
 		        }
 		        if (message.verificationMaterial !== undefined) {
-		            obj.verificationMaterial = exports$1.VerificationMaterial.toJSON(message.verificationMaterial);
+		            obj.verificationMaterial = exports.VerificationMaterial.toJSON(message.verificationMaterial);
 		        }
 		        if (message.content?.$case === "messageSignature") {
 		            obj.messageSignature = sigstore_common_1.MessageSignature.toJSON(message.content.messageSignature);
@@ -38183,16 +38183,16 @@ var hasRequiredSigstore_trustroot;
 function requireSigstore_trustroot () {
 	if (hasRequiredSigstore_trustroot) return sigstore_trustroot;
 	hasRequiredSigstore_trustroot = 1;
-	(function (exports$1) {
+	(function (exports) {
 		// Code generated by protoc-gen-ts_proto. DO NOT EDIT.
 		// versions:
 		//   protoc-gen-ts_proto  v2.7.0
 		//   protoc               v6.30.2
 		// source: sigstore_trustroot.proto
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.ClientTrustConfig = exports$1.ServiceConfiguration = exports$1.Service = exports$1.SigningConfig = exports$1.TrustedRoot = exports$1.CertificateAuthority = exports$1.TransparencyLogInstance = exports$1.ServiceSelector = void 0;
-		exports$1.serviceSelectorFromJSON = serviceSelectorFromJSON;
-		exports$1.serviceSelectorToJSON = serviceSelectorToJSON;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.ClientTrustConfig = exports.ServiceConfiguration = exports.Service = exports.SigningConfig = exports.TrustedRoot = exports.CertificateAuthority = exports.TransparencyLogInstance = exports.ServiceSelector = void 0;
+		exports.serviceSelectorFromJSON = serviceSelectorFromJSON;
+		exports.serviceSelectorToJSON = serviceSelectorToJSON;
 		/* eslint-disable */
 		const sigstore_common_1 = requireSigstore_common();
 		/**
@@ -38221,7 +38221,7 @@ function requireSigstore_trustroot () {
 		     * select the Service, e.g. random or round-robin.
 		     */
 		    ServiceSelector[ServiceSelector["EXACT"] = 3] = "EXACT";
-		})(ServiceSelector || (exports$1.ServiceSelector = ServiceSelector = {}));
+		})(ServiceSelector || (exports.ServiceSelector = ServiceSelector = {}));
 		function serviceSelectorFromJSON(object) {
 		    switch (object) {
 		        case 0:
@@ -38254,7 +38254,7 @@ function requireSigstore_trustroot () {
 		            throw new globalThis.Error("Unrecognized enum value " + object + " for enum ServiceSelector");
 		    }
 		}
-		exports$1.TransparencyLogInstance = {
+		exports.TransparencyLogInstance = {
 		    fromJSON(object) {
 		        return {
 		            baseUrl: isSet(object.baseUrl) ? globalThis.String(object.baseUrl) : "",
@@ -38288,7 +38288,7 @@ function requireSigstore_trustroot () {
 		        return obj;
 		    },
 		};
-		exports$1.CertificateAuthority = {
+		exports.CertificateAuthority = {
 		    fromJSON(object) {
 		        return {
 		            subject: isSet(object.subject) ? sigstore_common_1.DistinguishedName.fromJSON(object.subject) : undefined,
@@ -38318,21 +38318,21 @@ function requireSigstore_trustroot () {
 		        return obj;
 		    },
 		};
-		exports$1.TrustedRoot = {
+		exports.TrustedRoot = {
 		    fromJSON(object) {
 		        return {
 		            mediaType: isSet(object.mediaType) ? globalThis.String(object.mediaType) : "",
 		            tlogs: globalThis.Array.isArray(object?.tlogs)
-		                ? object.tlogs.map((e) => exports$1.TransparencyLogInstance.fromJSON(e))
+		                ? object.tlogs.map((e) => exports.TransparencyLogInstance.fromJSON(e))
 		                : [],
 		            certificateAuthorities: globalThis.Array.isArray(object?.certificateAuthorities)
-		                ? object.certificateAuthorities.map((e) => exports$1.CertificateAuthority.fromJSON(e))
+		                ? object.certificateAuthorities.map((e) => exports.CertificateAuthority.fromJSON(e))
 		                : [],
 		            ctlogs: globalThis.Array.isArray(object?.ctlogs)
-		                ? object.ctlogs.map((e) => exports$1.TransparencyLogInstance.fromJSON(e))
+		                ? object.ctlogs.map((e) => exports.TransparencyLogInstance.fromJSON(e))
 		                : [],
 		            timestampAuthorities: globalThis.Array.isArray(object?.timestampAuthorities)
-		                ? object.timestampAuthorities.map((e) => exports$1.CertificateAuthority.fromJSON(e))
+		                ? object.timestampAuthorities.map((e) => exports.CertificateAuthority.fromJSON(e))
 		                : [],
 		        };
 		    },
@@ -38342,34 +38342,34 @@ function requireSigstore_trustroot () {
 		            obj.mediaType = message.mediaType;
 		        }
 		        if (message.tlogs?.length) {
-		            obj.tlogs = message.tlogs.map((e) => exports$1.TransparencyLogInstance.toJSON(e));
+		            obj.tlogs = message.tlogs.map((e) => exports.TransparencyLogInstance.toJSON(e));
 		        }
 		        if (message.certificateAuthorities?.length) {
-		            obj.certificateAuthorities = message.certificateAuthorities.map((e) => exports$1.CertificateAuthority.toJSON(e));
+		            obj.certificateAuthorities = message.certificateAuthorities.map((e) => exports.CertificateAuthority.toJSON(e));
 		        }
 		        if (message.ctlogs?.length) {
-		            obj.ctlogs = message.ctlogs.map((e) => exports$1.TransparencyLogInstance.toJSON(e));
+		            obj.ctlogs = message.ctlogs.map((e) => exports.TransparencyLogInstance.toJSON(e));
 		        }
 		        if (message.timestampAuthorities?.length) {
-		            obj.timestampAuthorities = message.timestampAuthorities.map((e) => exports$1.CertificateAuthority.toJSON(e));
+		            obj.timestampAuthorities = message.timestampAuthorities.map((e) => exports.CertificateAuthority.toJSON(e));
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.SigningConfig = {
+		exports.SigningConfig = {
 		    fromJSON(object) {
 		        return {
 		            mediaType: isSet(object.mediaType) ? globalThis.String(object.mediaType) : "",
-		            caUrls: globalThis.Array.isArray(object?.caUrls) ? object.caUrls.map((e) => exports$1.Service.fromJSON(e)) : [],
-		            oidcUrls: globalThis.Array.isArray(object?.oidcUrls) ? object.oidcUrls.map((e) => exports$1.Service.fromJSON(e)) : [],
+		            caUrls: globalThis.Array.isArray(object?.caUrls) ? object.caUrls.map((e) => exports.Service.fromJSON(e)) : [],
+		            oidcUrls: globalThis.Array.isArray(object?.oidcUrls) ? object.oidcUrls.map((e) => exports.Service.fromJSON(e)) : [],
 		            rekorTlogUrls: globalThis.Array.isArray(object?.rekorTlogUrls)
-		                ? object.rekorTlogUrls.map((e) => exports$1.Service.fromJSON(e))
+		                ? object.rekorTlogUrls.map((e) => exports.Service.fromJSON(e))
 		                : [],
 		            rekorTlogConfig: isSet(object.rekorTlogConfig)
-		                ? exports$1.ServiceConfiguration.fromJSON(object.rekorTlogConfig)
+		                ? exports.ServiceConfiguration.fromJSON(object.rekorTlogConfig)
 		                : undefined,
-		            tsaUrls: globalThis.Array.isArray(object?.tsaUrls) ? object.tsaUrls.map((e) => exports$1.Service.fromJSON(e)) : [],
-		            tsaConfig: isSet(object.tsaConfig) ? exports$1.ServiceConfiguration.fromJSON(object.tsaConfig) : undefined,
+		            tsaUrls: globalThis.Array.isArray(object?.tsaUrls) ? object.tsaUrls.map((e) => exports.Service.fromJSON(e)) : [],
+		            tsaConfig: isSet(object.tsaConfig) ? exports.ServiceConfiguration.fromJSON(object.tsaConfig) : undefined,
 		        };
 		    },
 		    toJSON(message) {
@@ -38378,27 +38378,27 @@ function requireSigstore_trustroot () {
 		            obj.mediaType = message.mediaType;
 		        }
 		        if (message.caUrls?.length) {
-		            obj.caUrls = message.caUrls.map((e) => exports$1.Service.toJSON(e));
+		            obj.caUrls = message.caUrls.map((e) => exports.Service.toJSON(e));
 		        }
 		        if (message.oidcUrls?.length) {
-		            obj.oidcUrls = message.oidcUrls.map((e) => exports$1.Service.toJSON(e));
+		            obj.oidcUrls = message.oidcUrls.map((e) => exports.Service.toJSON(e));
 		        }
 		        if (message.rekorTlogUrls?.length) {
-		            obj.rekorTlogUrls = message.rekorTlogUrls.map((e) => exports$1.Service.toJSON(e));
+		            obj.rekorTlogUrls = message.rekorTlogUrls.map((e) => exports.Service.toJSON(e));
 		        }
 		        if (message.rekorTlogConfig !== undefined) {
-		            obj.rekorTlogConfig = exports$1.ServiceConfiguration.toJSON(message.rekorTlogConfig);
+		            obj.rekorTlogConfig = exports.ServiceConfiguration.toJSON(message.rekorTlogConfig);
 		        }
 		        if (message.tsaUrls?.length) {
-		            obj.tsaUrls = message.tsaUrls.map((e) => exports$1.Service.toJSON(e));
+		            obj.tsaUrls = message.tsaUrls.map((e) => exports.Service.toJSON(e));
 		        }
 		        if (message.tsaConfig !== undefined) {
-		            obj.tsaConfig = exports$1.ServiceConfiguration.toJSON(message.tsaConfig);
+		            obj.tsaConfig = exports.ServiceConfiguration.toJSON(message.tsaConfig);
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.Service = {
+		exports.Service = {
 		    fromJSON(object) {
 		        return {
 		            url: isSet(object.url) ? globalThis.String(object.url) : "",
@@ -38424,7 +38424,7 @@ function requireSigstore_trustroot () {
 		        return obj;
 		    },
 		};
-		exports$1.ServiceConfiguration = {
+		exports.ServiceConfiguration = {
 		    fromJSON(object) {
 		        return {
 		            selector: isSet(object.selector) ? serviceSelectorFromJSON(object.selector) : 0,
@@ -38442,12 +38442,12 @@ function requireSigstore_trustroot () {
 		        return obj;
 		    },
 		};
-		exports$1.ClientTrustConfig = {
+		exports.ClientTrustConfig = {
 		    fromJSON(object) {
 		        return {
 		            mediaType: isSet(object.mediaType) ? globalThis.String(object.mediaType) : "",
-		            trustedRoot: isSet(object.trustedRoot) ? exports$1.TrustedRoot.fromJSON(object.trustedRoot) : undefined,
-		            signingConfig: isSet(object.signingConfig) ? exports$1.SigningConfig.fromJSON(object.signingConfig) : undefined,
+		            trustedRoot: isSet(object.trustedRoot) ? exports.TrustedRoot.fromJSON(object.trustedRoot) : undefined,
+		            signingConfig: isSet(object.signingConfig) ? exports.SigningConfig.fromJSON(object.signingConfig) : undefined,
 		        };
 		    },
 		    toJSON(message) {
@@ -38456,10 +38456,10 @@ function requireSigstore_trustroot () {
 		            obj.mediaType = message.mediaType;
 		        }
 		        if (message.trustedRoot !== undefined) {
-		            obj.trustedRoot = exports$1.TrustedRoot.toJSON(message.trustedRoot);
+		            obj.trustedRoot = exports.TrustedRoot.toJSON(message.trustedRoot);
 		        }
 		        if (message.signingConfig !== undefined) {
-		            obj.signingConfig = exports$1.SigningConfig.toJSON(message.signingConfig);
+		            obj.signingConfig = exports.SigningConfig.toJSON(message.signingConfig);
 		        }
 		        return obj;
 		    },
@@ -38478,19 +38478,19 @@ var hasRequiredSigstore_verification;
 function requireSigstore_verification () {
 	if (hasRequiredSigstore_verification) return sigstore_verification;
 	hasRequiredSigstore_verification = 1;
-	(function (exports$1) {
+	(function (exports) {
 		// Code generated by protoc-gen-ts_proto. DO NOT EDIT.
 		// versions:
 		//   protoc-gen-ts_proto  v2.7.0
 		//   protoc               v6.30.2
 		// source: sigstore_verification.proto
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.Input = exports$1.Artifact = exports$1.ArtifactVerificationOptions_ObserverTimestampOptions = exports$1.ArtifactVerificationOptions_TlogIntegratedTimestampOptions = exports$1.ArtifactVerificationOptions_TimestampAuthorityOptions = exports$1.ArtifactVerificationOptions_CtlogOptions = exports$1.ArtifactVerificationOptions_TlogOptions = exports$1.ArtifactVerificationOptions = exports$1.PublicKeyIdentities = exports$1.CertificateIdentities = exports$1.CertificateIdentity = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.Input = exports.Artifact = exports.ArtifactVerificationOptions_ObserverTimestampOptions = exports.ArtifactVerificationOptions_TlogIntegratedTimestampOptions = exports.ArtifactVerificationOptions_TimestampAuthorityOptions = exports.ArtifactVerificationOptions_CtlogOptions = exports.ArtifactVerificationOptions_TlogOptions = exports.ArtifactVerificationOptions = exports.PublicKeyIdentities = exports.CertificateIdentities = exports.CertificateIdentity = void 0;
 		/* eslint-disable */
 		const sigstore_bundle_1 = requireSigstore_bundle();
 		const sigstore_common_1 = requireSigstore_common();
 		const sigstore_trustroot_1 = requireSigstore_trustroot();
-		exports$1.CertificateIdentity = {
+		exports.CertificateIdentity = {
 		    fromJSON(object) {
 		        return {
 		            issuer: isSet(object.issuer) ? globalThis.String(object.issuer) : "",
@@ -38514,23 +38514,23 @@ function requireSigstore_verification () {
 		        return obj;
 		    },
 		};
-		exports$1.CertificateIdentities = {
+		exports.CertificateIdentities = {
 		    fromJSON(object) {
 		        return {
 		            identities: globalThis.Array.isArray(object?.identities)
-		                ? object.identities.map((e) => exports$1.CertificateIdentity.fromJSON(e))
+		                ? object.identities.map((e) => exports.CertificateIdentity.fromJSON(e))
 		                : [],
 		        };
 		    },
 		    toJSON(message) {
 		        const obj = {};
 		        if (message.identities?.length) {
-		            obj.identities = message.identities.map((e) => exports$1.CertificateIdentity.toJSON(e));
+		            obj.identities = message.identities.map((e) => exports.CertificateIdentity.toJSON(e));
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.PublicKeyIdentities = {
+		exports.PublicKeyIdentities = {
 		    fromJSON(object) {
 		        return {
 		            publicKeys: globalThis.Array.isArray(object?.publicKeys)
@@ -38546,61 +38546,61 @@ function requireSigstore_verification () {
 		        return obj;
 		    },
 		};
-		exports$1.ArtifactVerificationOptions = {
+		exports.ArtifactVerificationOptions = {
 		    fromJSON(object) {
 		        return {
 		            signers: isSet(object.certificateIdentities)
 		                ? {
 		                    $case: "certificateIdentities",
-		                    certificateIdentities: exports$1.CertificateIdentities.fromJSON(object.certificateIdentities),
+		                    certificateIdentities: exports.CertificateIdentities.fromJSON(object.certificateIdentities),
 		                }
 		                : isSet(object.publicKeys)
-		                    ? { $case: "publicKeys", publicKeys: exports$1.PublicKeyIdentities.fromJSON(object.publicKeys) }
+		                    ? { $case: "publicKeys", publicKeys: exports.PublicKeyIdentities.fromJSON(object.publicKeys) }
 		                    : undefined,
 		            tlogOptions: isSet(object.tlogOptions)
-		                ? exports$1.ArtifactVerificationOptions_TlogOptions.fromJSON(object.tlogOptions)
+		                ? exports.ArtifactVerificationOptions_TlogOptions.fromJSON(object.tlogOptions)
 		                : undefined,
 		            ctlogOptions: isSet(object.ctlogOptions)
-		                ? exports$1.ArtifactVerificationOptions_CtlogOptions.fromJSON(object.ctlogOptions)
+		                ? exports.ArtifactVerificationOptions_CtlogOptions.fromJSON(object.ctlogOptions)
 		                : undefined,
 		            tsaOptions: isSet(object.tsaOptions)
-		                ? exports$1.ArtifactVerificationOptions_TimestampAuthorityOptions.fromJSON(object.tsaOptions)
+		                ? exports.ArtifactVerificationOptions_TimestampAuthorityOptions.fromJSON(object.tsaOptions)
 		                : undefined,
 		            integratedTsOptions: isSet(object.integratedTsOptions)
-		                ? exports$1.ArtifactVerificationOptions_TlogIntegratedTimestampOptions.fromJSON(object.integratedTsOptions)
+		                ? exports.ArtifactVerificationOptions_TlogIntegratedTimestampOptions.fromJSON(object.integratedTsOptions)
 		                : undefined,
 		            observerOptions: isSet(object.observerOptions)
-		                ? exports$1.ArtifactVerificationOptions_ObserverTimestampOptions.fromJSON(object.observerOptions)
+		                ? exports.ArtifactVerificationOptions_ObserverTimestampOptions.fromJSON(object.observerOptions)
 		                : undefined,
 		        };
 		    },
 		    toJSON(message) {
 		        const obj = {};
 		        if (message.signers?.$case === "certificateIdentities") {
-		            obj.certificateIdentities = exports$1.CertificateIdentities.toJSON(message.signers.certificateIdentities);
+		            obj.certificateIdentities = exports.CertificateIdentities.toJSON(message.signers.certificateIdentities);
 		        }
 		        else if (message.signers?.$case === "publicKeys") {
-		            obj.publicKeys = exports$1.PublicKeyIdentities.toJSON(message.signers.publicKeys);
+		            obj.publicKeys = exports.PublicKeyIdentities.toJSON(message.signers.publicKeys);
 		        }
 		        if (message.tlogOptions !== undefined) {
-		            obj.tlogOptions = exports$1.ArtifactVerificationOptions_TlogOptions.toJSON(message.tlogOptions);
+		            obj.tlogOptions = exports.ArtifactVerificationOptions_TlogOptions.toJSON(message.tlogOptions);
 		        }
 		        if (message.ctlogOptions !== undefined) {
-		            obj.ctlogOptions = exports$1.ArtifactVerificationOptions_CtlogOptions.toJSON(message.ctlogOptions);
+		            obj.ctlogOptions = exports.ArtifactVerificationOptions_CtlogOptions.toJSON(message.ctlogOptions);
 		        }
 		        if (message.tsaOptions !== undefined) {
-		            obj.tsaOptions = exports$1.ArtifactVerificationOptions_TimestampAuthorityOptions.toJSON(message.tsaOptions);
+		            obj.tsaOptions = exports.ArtifactVerificationOptions_TimestampAuthorityOptions.toJSON(message.tsaOptions);
 		        }
 		        if (message.integratedTsOptions !== undefined) {
-		            obj.integratedTsOptions = exports$1.ArtifactVerificationOptions_TlogIntegratedTimestampOptions.toJSON(message.integratedTsOptions);
+		            obj.integratedTsOptions = exports.ArtifactVerificationOptions_TlogIntegratedTimestampOptions.toJSON(message.integratedTsOptions);
 		        }
 		        if (message.observerOptions !== undefined) {
-		            obj.observerOptions = exports$1.ArtifactVerificationOptions_ObserverTimestampOptions.toJSON(message.observerOptions);
+		            obj.observerOptions = exports.ArtifactVerificationOptions_ObserverTimestampOptions.toJSON(message.observerOptions);
 		        }
 		        return obj;
 		    },
 		};
-		exports$1.ArtifactVerificationOptions_TlogOptions = {
+		exports.ArtifactVerificationOptions_TlogOptions = {
 		    fromJSON(object) {
 		        return {
 		            threshold: isSet(object.threshold) ? globalThis.Number(object.threshold) : 0,
@@ -38624,7 +38624,7 @@ function requireSigstore_verification () {
 		        return obj;
 		    },
 		};
-		exports$1.ArtifactVerificationOptions_CtlogOptions = {
+		exports.ArtifactVerificationOptions_CtlogOptions = {
 		    fromJSON(object) {
 		        return {
 		            threshold: isSet(object.threshold) ? globalThis.Number(object.threshold) : 0,
@@ -38642,7 +38642,7 @@ function requireSigstore_verification () {
 		        return obj;
 		    },
 		};
-		exports$1.ArtifactVerificationOptions_TimestampAuthorityOptions = {
+		exports.ArtifactVerificationOptions_TimestampAuthorityOptions = {
 		    fromJSON(object) {
 		        return {
 		            threshold: isSet(object.threshold) ? globalThis.Number(object.threshold) : 0,
@@ -38660,7 +38660,7 @@ function requireSigstore_verification () {
 		        return obj;
 		    },
 		};
-		exports$1.ArtifactVerificationOptions_TlogIntegratedTimestampOptions = {
+		exports.ArtifactVerificationOptions_TlogIntegratedTimestampOptions = {
 		    fromJSON(object) {
 		        return {
 		            threshold: isSet(object.threshold) ? globalThis.Number(object.threshold) : 0,
@@ -38678,7 +38678,7 @@ function requireSigstore_verification () {
 		        return obj;
 		    },
 		};
-		exports$1.ArtifactVerificationOptions_ObserverTimestampOptions = {
+		exports.ArtifactVerificationOptions_ObserverTimestampOptions = {
 		    fromJSON(object) {
 		        return {
 		            threshold: isSet(object.threshold) ? globalThis.Number(object.threshold) : 0,
@@ -38696,7 +38696,7 @@ function requireSigstore_verification () {
 		        return obj;
 		    },
 		};
-		exports$1.Artifact = {
+		exports.Artifact = {
 		    fromJSON(object) {
 		        return {
 		            data: isSet(object.artifactUri)
@@ -38722,15 +38722,15 @@ function requireSigstore_verification () {
 		        return obj;
 		    },
 		};
-		exports$1.Input = {
+		exports.Input = {
 		    fromJSON(object) {
 		        return {
 		            artifactTrustRoot: isSet(object.artifactTrustRoot) ? sigstore_trustroot_1.TrustedRoot.fromJSON(object.artifactTrustRoot) : undefined,
 		            artifactVerificationOptions: isSet(object.artifactVerificationOptions)
-		                ? exports$1.ArtifactVerificationOptions.fromJSON(object.artifactVerificationOptions)
+		                ? exports.ArtifactVerificationOptions.fromJSON(object.artifactVerificationOptions)
 		                : undefined,
 		            bundle: isSet(object.bundle) ? sigstore_bundle_1.Bundle.fromJSON(object.bundle) : undefined,
-		            artifact: isSet(object.artifact) ? exports$1.Artifact.fromJSON(object.artifact) : undefined,
+		            artifact: isSet(object.artifact) ? exports.Artifact.fromJSON(object.artifact) : undefined,
 		        };
 		    },
 		    toJSON(message) {
@@ -38739,13 +38739,13 @@ function requireSigstore_verification () {
 		            obj.artifactTrustRoot = sigstore_trustroot_1.TrustedRoot.toJSON(message.artifactTrustRoot);
 		        }
 		        if (message.artifactVerificationOptions !== undefined) {
-		            obj.artifactVerificationOptions = exports$1.ArtifactVerificationOptions.toJSON(message.artifactVerificationOptions);
+		            obj.artifactVerificationOptions = exports.ArtifactVerificationOptions.toJSON(message.artifactVerificationOptions);
 		        }
 		        if (message.bundle !== undefined) {
 		            obj.bundle = sigstore_bundle_1.Bundle.toJSON(message.bundle);
 		        }
 		        if (message.artifact !== undefined) {
-		            obj.artifact = exports$1.Artifact.toJSON(message.artifact);
+		            obj.artifact = exports.Artifact.toJSON(message.artifact);
 		        }
 		        return obj;
 		    },
@@ -38768,7 +38768,7 @@ var hasRequiredDist$7;
 function requireDist$7 () {
 	if (hasRequiredDist$7) return dist$6;
 	hasRequiredDist$7 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (dist$6 && dist$6.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -38780,10 +38780,10 @@ function requireDist$7 () {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __exportStar = (dist$6 && dist$6.__exportStar) || function(m, exports$1) {
-		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports$1, p)) __createBinding(exports$1, m, p);
+		var __exportStar = (dist$6 && dist$6.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
+		Object.defineProperty(exports, "__esModule", { value: true });
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -38799,12 +38799,12 @@ function requireDist$7 () {
 		See the License for the specific language governing permissions and
 		limitations under the License.
 		*/
-		__exportStar(requireEnvelope(), exports$1);
-		__exportStar(requireSigstore_bundle(), exports$1);
-		__exportStar(requireSigstore_common(), exports$1);
-		__exportStar(requireSigstore_rekor(), exports$1);
-		__exportStar(requireSigstore_trustroot(), exports$1);
-		__exportStar(requireSigstore_verification(), exports$1); 
+		__exportStar(requireEnvelope(), exports);
+		__exportStar(requireSigstore_bundle(), exports);
+		__exportStar(requireSigstore_common(), exports);
+		__exportStar(requireSigstore_rekor(), exports);
+		__exportStar(requireSigstore_trustroot(), exports);
+		__exportStar(requireSigstore_verification(), exports); 
 	} (dist$6));
 	return dist$6;
 }
@@ -39254,9 +39254,9 @@ var hasRequiredDist$6;
 function requireDist$6 () {
 	if (hasRequiredDist$6) return dist$7;
 	hasRequiredDist$6 = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.isBundleV01 = exports$1.assertBundleV02 = exports$1.assertBundleV01 = exports$1.assertBundleLatest = exports$1.assertBundle = exports$1.envelopeToJSON = exports$1.envelopeFromJSON = exports$1.bundleToJSON = exports$1.bundleFromJSON = exports$1.ValidationError = exports$1.isBundleWithPublicKey = exports$1.isBundleWithMessageSignature = exports$1.isBundleWithDsseEnvelope = exports$1.isBundleWithCertificateChain = exports$1.BUNDLE_V03_MEDIA_TYPE = exports$1.BUNDLE_V03_LEGACY_MEDIA_TYPE = exports$1.BUNDLE_V02_MEDIA_TYPE = exports$1.BUNDLE_V01_MEDIA_TYPE = exports$1.toMessageSignatureBundle = exports$1.toDSSEBundle = void 0;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.isBundleV01 = exports.assertBundleV02 = exports.assertBundleV01 = exports.assertBundleLatest = exports.assertBundle = exports.envelopeToJSON = exports.envelopeFromJSON = exports.bundleToJSON = exports.bundleFromJSON = exports.ValidationError = exports.isBundleWithPublicKey = exports.isBundleWithMessageSignature = exports.isBundleWithDsseEnvelope = exports.isBundleWithCertificateChain = exports.BUNDLE_V03_MEDIA_TYPE = exports.BUNDLE_V03_LEGACY_MEDIA_TYPE = exports.BUNDLE_V02_MEDIA_TYPE = exports.BUNDLE_V01_MEDIA_TYPE = exports.toMessageSignatureBundle = exports.toDSSEBundle = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -39273,30 +39273,30 @@ function requireDist$6 () {
 		limitations under the License.
 		*/
 		var build_1 = requireBuild$1();
-		Object.defineProperty(exports$1, "toDSSEBundle", { enumerable: true, get: function () { return build_1.toDSSEBundle; } });
-		Object.defineProperty(exports$1, "toMessageSignatureBundle", { enumerable: true, get: function () { return build_1.toMessageSignatureBundle; } });
+		Object.defineProperty(exports, "toDSSEBundle", { enumerable: true, get: function () { return build_1.toDSSEBundle; } });
+		Object.defineProperty(exports, "toMessageSignatureBundle", { enumerable: true, get: function () { return build_1.toMessageSignatureBundle; } });
 		var bundle_1 = requireBundle$1();
-		Object.defineProperty(exports$1, "BUNDLE_V01_MEDIA_TYPE", { enumerable: true, get: function () { return bundle_1.BUNDLE_V01_MEDIA_TYPE; } });
-		Object.defineProperty(exports$1, "BUNDLE_V02_MEDIA_TYPE", { enumerable: true, get: function () { return bundle_1.BUNDLE_V02_MEDIA_TYPE; } });
-		Object.defineProperty(exports$1, "BUNDLE_V03_LEGACY_MEDIA_TYPE", { enumerable: true, get: function () { return bundle_1.BUNDLE_V03_LEGACY_MEDIA_TYPE; } });
-		Object.defineProperty(exports$1, "BUNDLE_V03_MEDIA_TYPE", { enumerable: true, get: function () { return bundle_1.BUNDLE_V03_MEDIA_TYPE; } });
-		Object.defineProperty(exports$1, "isBundleWithCertificateChain", { enumerable: true, get: function () { return bundle_1.isBundleWithCertificateChain; } });
-		Object.defineProperty(exports$1, "isBundleWithDsseEnvelope", { enumerable: true, get: function () { return bundle_1.isBundleWithDsseEnvelope; } });
-		Object.defineProperty(exports$1, "isBundleWithMessageSignature", { enumerable: true, get: function () { return bundle_1.isBundleWithMessageSignature; } });
-		Object.defineProperty(exports$1, "isBundleWithPublicKey", { enumerable: true, get: function () { return bundle_1.isBundleWithPublicKey; } });
+		Object.defineProperty(exports, "BUNDLE_V01_MEDIA_TYPE", { enumerable: true, get: function () { return bundle_1.BUNDLE_V01_MEDIA_TYPE; } });
+		Object.defineProperty(exports, "BUNDLE_V02_MEDIA_TYPE", { enumerable: true, get: function () { return bundle_1.BUNDLE_V02_MEDIA_TYPE; } });
+		Object.defineProperty(exports, "BUNDLE_V03_LEGACY_MEDIA_TYPE", { enumerable: true, get: function () { return bundle_1.BUNDLE_V03_LEGACY_MEDIA_TYPE; } });
+		Object.defineProperty(exports, "BUNDLE_V03_MEDIA_TYPE", { enumerable: true, get: function () { return bundle_1.BUNDLE_V03_MEDIA_TYPE; } });
+		Object.defineProperty(exports, "isBundleWithCertificateChain", { enumerable: true, get: function () { return bundle_1.isBundleWithCertificateChain; } });
+		Object.defineProperty(exports, "isBundleWithDsseEnvelope", { enumerable: true, get: function () { return bundle_1.isBundleWithDsseEnvelope; } });
+		Object.defineProperty(exports, "isBundleWithMessageSignature", { enumerable: true, get: function () { return bundle_1.isBundleWithMessageSignature; } });
+		Object.defineProperty(exports, "isBundleWithPublicKey", { enumerable: true, get: function () { return bundle_1.isBundleWithPublicKey; } });
 		var error_1 = requireError$4();
-		Object.defineProperty(exports$1, "ValidationError", { enumerable: true, get: function () { return error_1.ValidationError; } });
+		Object.defineProperty(exports, "ValidationError", { enumerable: true, get: function () { return error_1.ValidationError; } });
 		var serialized_1 = requireSerialized();
-		Object.defineProperty(exports$1, "bundleFromJSON", { enumerable: true, get: function () { return serialized_1.bundleFromJSON; } });
-		Object.defineProperty(exports$1, "bundleToJSON", { enumerable: true, get: function () { return serialized_1.bundleToJSON; } });
-		Object.defineProperty(exports$1, "envelopeFromJSON", { enumerable: true, get: function () { return serialized_1.envelopeFromJSON; } });
-		Object.defineProperty(exports$1, "envelopeToJSON", { enumerable: true, get: function () { return serialized_1.envelopeToJSON; } });
+		Object.defineProperty(exports, "bundleFromJSON", { enumerable: true, get: function () { return serialized_1.bundleFromJSON; } });
+		Object.defineProperty(exports, "bundleToJSON", { enumerable: true, get: function () { return serialized_1.bundleToJSON; } });
+		Object.defineProperty(exports, "envelopeFromJSON", { enumerable: true, get: function () { return serialized_1.envelopeFromJSON; } });
+		Object.defineProperty(exports, "envelopeToJSON", { enumerable: true, get: function () { return serialized_1.envelopeToJSON; } });
 		var validate_1 = requireValidate();
-		Object.defineProperty(exports$1, "assertBundle", { enumerable: true, get: function () { return validate_1.assertBundle; } });
-		Object.defineProperty(exports$1, "assertBundleLatest", { enumerable: true, get: function () { return validate_1.assertBundleLatest; } });
-		Object.defineProperty(exports$1, "assertBundleV01", { enumerable: true, get: function () { return validate_1.assertBundleV01; } });
-		Object.defineProperty(exports$1, "assertBundleV02", { enumerable: true, get: function () { return validate_1.assertBundleV02; } });
-		Object.defineProperty(exports$1, "isBundleV01", { enumerable: true, get: function () { return validate_1.isBundleV01; } }); 
+		Object.defineProperty(exports, "assertBundle", { enumerable: true, get: function () { return validate_1.assertBundle; } });
+		Object.defineProperty(exports, "assertBundleLatest", { enumerable: true, get: function () { return validate_1.assertBundleLatest; } });
+		Object.defineProperty(exports, "assertBundleV01", { enumerable: true, get: function () { return validate_1.assertBundleV01; } });
+		Object.defineProperty(exports, "assertBundleV02", { enumerable: true, get: function () { return validate_1.assertBundleV02; } });
+		Object.defineProperty(exports, "isBundleV01", { enumerable: true, get: function () { return validate_1.isBundleV01; } }); 
 	} (dist$7));
 	return dist$7;
 }
@@ -39988,9 +39988,9 @@ var hasRequiredAsn1;
 function requireAsn1 () {
 	if (hasRequiredAsn1) return asn1;
 	hasRequiredAsn1 = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.ASN1Obj = void 0;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.ASN1Obj = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -40007,7 +40007,7 @@ function requireAsn1 () {
 		limitations under the License.
 		*/
 		var obj_1 = requireObj();
-		Object.defineProperty(exports$1, "ASN1Obj", { enumerable: true, get: function () { return obj_1.ASN1Obj; } }); 
+		Object.defineProperty(exports, "ASN1Obj", { enumerable: true, get: function () { return obj_1.ASN1Obj; } }); 
 	} (asn1));
 	return asn1;
 }
@@ -40617,7 +40617,7 @@ var hasRequiredRfc3161;
 function requireRfc3161 () {
 	if (hasRequiredRfc3161) return rfc3161;
 	hasRequiredRfc3161 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -40633,10 +40633,10 @@ function requireRfc3161 () {
 		See the License for the specific language governing permissions and
 		limitations under the License.
 		*/
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.RFC3161Timestamp = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.RFC3161Timestamp = void 0;
 		var timestamp_1 = requireTimestamp();
-		Object.defineProperty(exports$1, "RFC3161Timestamp", { enumerable: true, get: function () { return timestamp_1.RFC3161Timestamp; } }); 
+		Object.defineProperty(exports, "RFC3161Timestamp", { enumerable: true, get: function () { return timestamp_1.RFC3161Timestamp; } }); 
 	} (rfc3161));
 	return rfc3161;
 }
@@ -40954,7 +40954,7 @@ var hasRequiredCert;
 function requireCert () {
 	if (hasRequiredCert) return cert;
 	hasRequiredCert = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (cert && cert.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -40978,8 +40978,8 @@ function requireCert () {
 		    __setModuleDefault(result, mod);
 		    return result;
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.X509Certificate = exports$1.EXTENSION_OID_SCT = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.X509Certificate = exports.EXTENSION_OID_SCT = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -41005,7 +41005,7 @@ function requireCert () {
 		const EXTENSION_OID_SUBJECT_ALT_NAME = '2.5.29.17';
 		const EXTENSION_OID_BASIC_CONSTRAINTS = '2.5.29.19';
 		const EXTENSION_OID_AUTHORITY_KEY_ID = '2.5.29.35';
-		exports$1.EXTENSION_OID_SCT = '1.3.6.1.4.1.11129.2.4.2';
+		exports.EXTENSION_OID_SCT = '1.3.6.1.4.1.11129.2.4.2';
 		class X509Certificate {
 		    constructor(asn1) {
 		        this.root = asn1;
@@ -41086,7 +41086,7 @@ function requireCert () {
 		            : /* istanbul ignore next */ undefined;
 		    }
 		    get extSCT() {
-		        const ext = this.findExtension(exports$1.EXTENSION_OID_SCT);
+		        const ext = this.findExtension(exports.EXTENSION_OID_SCT);
 		        return ext ? new ext_1.X509SCTExtension(ext) : undefined;
 		    }
 		    get isCA() {
@@ -41183,7 +41183,7 @@ function requireCert () {
 		        return this.tbsCertificateObj.subs.find((sub) => sub.tag.isContextSpecific(0x03));
 		    }
 		}
-		exports$1.X509Certificate = X509Certificate; 
+		exports.X509Certificate = X509Certificate; 
 	} (cert));
 	return cert;
 }
@@ -41193,7 +41193,7 @@ var hasRequiredX509;
 function requireX509 () {
 	if (hasRequiredX509) return x509;
 	hasRequiredX509 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -41209,13 +41209,13 @@ function requireX509 () {
 		See the License for the specific language governing permissions and
 		limitations under the License.
 		*/
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.X509SCTExtension = exports$1.X509Certificate = exports$1.EXTENSION_OID_SCT = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.X509SCTExtension = exports.X509Certificate = exports.EXTENSION_OID_SCT = void 0;
 		var cert_1 = requireCert();
-		Object.defineProperty(exports$1, "EXTENSION_OID_SCT", { enumerable: true, get: function () { return cert_1.EXTENSION_OID_SCT; } });
-		Object.defineProperty(exports$1, "X509Certificate", { enumerable: true, get: function () { return cert_1.X509Certificate; } });
+		Object.defineProperty(exports, "EXTENSION_OID_SCT", { enumerable: true, get: function () { return cert_1.EXTENSION_OID_SCT; } });
+		Object.defineProperty(exports, "X509Certificate", { enumerable: true, get: function () { return cert_1.X509Certificate; } });
 		var ext_1 = requireExt();
-		Object.defineProperty(exports$1, "X509SCTExtension", { enumerable: true, get: function () { return ext_1.X509SCTExtension; } }); 
+		Object.defineProperty(exports, "X509SCTExtension", { enumerable: true, get: function () { return ext_1.X509SCTExtension; } }); 
 	} (x509));
 	return x509;
 }
@@ -41225,7 +41225,7 @@ var hasRequiredDist$5;
 function requireDist$5 () {
 	if (hasRequiredDist$5) return dist$4;
 	hasRequiredDist$5 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (dist$4 && dist$4.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -41249,8 +41249,8 @@ function requireDist$5 () {
 		    __setModuleDefault(result, mod);
 		    return result;
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.X509SCTExtension = exports$1.X509Certificate = exports$1.EXTENSION_OID_SCT = exports$1.ByteStream = exports$1.RFC3161Timestamp = exports$1.pem = exports$1.json = exports$1.encoding = exports$1.dsse = exports$1.crypto = exports$1.ASN1Obj = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.X509SCTExtension = exports.X509Certificate = exports.EXTENSION_OID_SCT = exports.ByteStream = exports.RFC3161Timestamp = exports.pem = exports.json = exports.encoding = exports.dsse = exports.crypto = exports.ASN1Obj = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -41267,20 +41267,20 @@ function requireDist$5 () {
 		limitations under the License.
 		*/
 		var asn1_1 = requireAsn1();
-		Object.defineProperty(exports$1, "ASN1Obj", { enumerable: true, get: function () { return asn1_1.ASN1Obj; } });
-		exports$1.crypto = __importStar(requireCrypto());
-		exports$1.dsse = __importStar(requireDsse$1());
-		exports$1.encoding = __importStar(requireEncoding$2());
-		exports$1.json = __importStar(requireJson());
-		exports$1.pem = __importStar(requirePem());
+		Object.defineProperty(exports, "ASN1Obj", { enumerable: true, get: function () { return asn1_1.ASN1Obj; } });
+		exports.crypto = __importStar(requireCrypto());
+		exports.dsse = __importStar(requireDsse$1());
+		exports.encoding = __importStar(requireEncoding$2());
+		exports.json = __importStar(requireJson());
+		exports.pem = __importStar(requirePem());
 		var rfc3161_1 = requireRfc3161();
-		Object.defineProperty(exports$1, "RFC3161Timestamp", { enumerable: true, get: function () { return rfc3161_1.RFC3161Timestamp; } });
+		Object.defineProperty(exports, "RFC3161Timestamp", { enumerable: true, get: function () { return rfc3161_1.RFC3161Timestamp; } });
 		var stream_1 = requireStream();
-		Object.defineProperty(exports$1, "ByteStream", { enumerable: true, get: function () { return stream_1.ByteStream; } });
+		Object.defineProperty(exports, "ByteStream", { enumerable: true, get: function () { return stream_1.ByteStream; } });
 		var x509_1 = requireX509();
-		Object.defineProperty(exports$1, "EXTENSION_OID_SCT", { enumerable: true, get: function () { return x509_1.EXTENSION_OID_SCT; } });
-		Object.defineProperty(exports$1, "X509Certificate", { enumerable: true, get: function () { return x509_1.X509Certificate; } });
-		Object.defineProperty(exports$1, "X509SCTExtension", { enumerable: true, get: function () { return x509_1.X509SCTExtension; } }); 
+		Object.defineProperty(exports, "EXTENSION_OID_SCT", { enumerable: true, get: function () { return x509_1.EXTENSION_OID_SCT; } });
+		Object.defineProperty(exports, "X509Certificate", { enumerable: true, get: function () { return x509_1.X509Certificate; } });
+		Object.defineProperty(exports, "X509SCTExtension", { enumerable: true, get: function () { return x509_1.X509SCTExtension; } }); 
 	} (dist$4));
 	return dist$4;
 }
@@ -41374,7 +41374,7 @@ var hasRequiredUtil$1;
 function requireUtil$1 () {
 	if (hasRequiredUtil$1) return util$1;
 	hasRequiredUtil$1 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (util$1 && util$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -41408,8 +41408,8 @@ function requireUtil$1 () {
 		        return result;
 		    };
 		})();
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.ua = exports$1.oidc = exports$1.pem = exports$1.json = exports$1.encoding = exports$1.dsse = exports$1.crypto = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.ua = exports.oidc = exports.pem = exports.json = exports.encoding = exports.dsse = exports.crypto = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -41426,13 +41426,13 @@ function requireUtil$1 () {
 		limitations under the License.
 		*/
 		var core_1 = requireDist$5();
-		Object.defineProperty(exports$1, "crypto", { enumerable: true, get: function () { return core_1.crypto; } });
-		Object.defineProperty(exports$1, "dsse", { enumerable: true, get: function () { return core_1.dsse; } });
-		Object.defineProperty(exports$1, "encoding", { enumerable: true, get: function () { return core_1.encoding; } });
-		Object.defineProperty(exports$1, "json", { enumerable: true, get: function () { return core_1.json; } });
-		Object.defineProperty(exports$1, "pem", { enumerable: true, get: function () { return core_1.pem; } });
-		exports$1.oidc = __importStar(requireOidc());
-		exports$1.ua = __importStar(requireUa()); 
+		Object.defineProperty(exports, "crypto", { enumerable: true, get: function () { return core_1.crypto; } });
+		Object.defineProperty(exports, "dsse", { enumerable: true, get: function () { return core_1.dsse; } });
+		Object.defineProperty(exports, "encoding", { enumerable: true, get: function () { return core_1.encoding; } });
+		Object.defineProperty(exports, "json", { enumerable: true, get: function () { return core_1.json; } });
+		Object.defineProperty(exports, "pem", { enumerable: true, get: function () { return core_1.pem; } });
+		exports.oidc = __importStar(requireOidc());
+		exports.ua = __importStar(requireUa()); 
 	} (util$1));
 	return util$1;
 }
@@ -41683,13 +41683,13 @@ var hasRequiredBundler;
 function requireBundler () {
 	if (hasRequiredBundler) return bundler;
 	hasRequiredBundler = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.MessageSignatureBundleBuilder = exports$1.DSSEBundleBuilder = void 0;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.MessageSignatureBundleBuilder = exports.DSSEBundleBuilder = void 0;
 		var dsse_1 = requireDsse();
-		Object.defineProperty(exports$1, "DSSEBundleBuilder", { enumerable: true, get: function () { return dsse_1.DSSEBundleBuilder; } });
+		Object.defineProperty(exports, "DSSEBundleBuilder", { enumerable: true, get: function () { return dsse_1.DSSEBundleBuilder; } });
 		var message_1 = requireMessage();
-		Object.defineProperty(exports$1, "MessageSignatureBundleBuilder", { enumerable: true, get: function () { return message_1.MessageSignatureBundleBuilder; } }); 
+		Object.defineProperty(exports, "MessageSignatureBundleBuilder", { enumerable: true, get: function () { return message_1.MessageSignatureBundleBuilder; } }); 
 	} (bundler));
 	return bundler;
 }
@@ -41792,12 +41792,12 @@ var hasRequiredCommonjs$5;
 function requireCommonjs$5 () {
 	if (hasRequiredCommonjs$5) return commonjs$4;
 	hasRequiredCommonjs$5 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __importDefault = (commonjs$4 && commonjs$4.__importDefault) || function (mod) {
 		    return (mod && mod.__esModule) ? mod : { "default": mod };
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.Minipass = exports$1.isWritable = exports$1.isReadable = exports$1.isStream = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.Minipass = exports.isWritable = exports.isReadable = exports.isStream = void 0;
 		const proc = typeof process === 'object' && process
 		    ? process
 		    : {
@@ -41815,9 +41815,9 @@ function requireCommonjs$5 () {
 		    typeof s === 'object' &&
 		    (s instanceof Minipass ||
 		        s instanceof node_stream_1.default ||
-		        (0, exports$1.isReadable)(s) ||
-		        (0, exports$1.isWritable)(s));
-		exports$1.isStream = isStream;
+		        (0, exports.isReadable)(s) ||
+		        (0, exports.isWritable)(s));
+		exports.isStream = isStream;
 		/**
 		 * Return true if the argument is a valid {@link Minipass.Readable}
 		 */
@@ -41827,7 +41827,7 @@ function requireCommonjs$5 () {
 		    typeof s.pipe === 'function' &&
 		    // node core Writable streams have a pipe() method, but it throws
 		    s.pipe !== node_stream_1.default.Writable.prototype.pipe;
-		exports$1.isReadable = isReadable;
+		exports.isReadable = isReadable;
 		/**
 		 * Return true if the argument is a valid {@link Minipass.Writable}
 		 */
@@ -41836,7 +41836,7 @@ function requireCommonjs$5 () {
 		    s instanceof node_events_1.EventEmitter &&
 		    typeof s.write === 'function' &&
 		    typeof s.end === 'function';
-		exports$1.isWritable = isWritable;
+		exports.isWritable = isWritable;
 		const EOF = Symbol('EOF');
 		const MAYBE_EMIT_END = Symbol('maybeEmitEnd');
 		const EMITTED_END = Symbol('emittedEnd');
@@ -42815,10 +42815,10 @@ function requireCommonjs$5 () {
 		     * @deprecated
 		     */
 		    static get isStream() {
-		        return exports$1.isStream;
+		        return exports.isStream;
 		    }
 		}
-		exports$1.Minipass = Minipass;
+		exports.Minipass = Minipass;
 		
 	} (commonjs$4));
 	return commonjs$4;
@@ -42961,7 +42961,7 @@ var hasRequiredCommonjs$4;
 function requireCommonjs$4 () {
 	if (hasRequiredCommonjs$4) return commonjs$5;
 	hasRequiredCommonjs$4 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (commonjs$5 && commonjs$5.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -42998,15 +42998,15 @@ function requireCommonjs$4 () {
 		var __importDefault = (commonjs$5 && commonjs$5.__importDefault) || function (mod) {
 		    return (mod && mod.__esModule) ? mod : { "default": mod };
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.ZstdDecompress = exports$1.ZstdCompress = exports$1.BrotliDecompress = exports$1.BrotliCompress = exports$1.Unzip = exports$1.InflateRaw = exports$1.DeflateRaw = exports$1.Gunzip = exports$1.Gzip = exports$1.Inflate = exports$1.Deflate = exports$1.Zlib = exports$1.ZlibError = exports$1.constants = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.ZstdDecompress = exports.ZstdCompress = exports.BrotliDecompress = exports.BrotliCompress = exports.Unzip = exports.InflateRaw = exports.DeflateRaw = exports.Gunzip = exports.Gzip = exports.Inflate = exports.Deflate = exports.Zlib = exports.ZlibError = exports.constants = void 0;
 		const assert_1 = __importDefault(require$$0$b);
 		const buffer_1 = require$$0$d;
 		const minipass_1 = requireCommonjs$5();
 		const realZlib = __importStar(require$$0$c);
 		const constants_js_1 = requireConstants$4();
 		var constants_js_2 = requireConstants$4();
-		Object.defineProperty(exports$1, "constants", { enumerable: true, get: function () { return constants_js_2.constants; } });
+		Object.defineProperty(exports, "constants", { enumerable: true, get: function () { return constants_js_2.constants; } });
 		const OriginalBufferConcat = buffer_1.Buffer.concat;
 		const desc = Object.getOwnPropertyDescriptor(buffer_1.Buffer, 'concat');
 		const noop = (args) => args;
@@ -43033,7 +43033,7 @@ function requireCommonjs$4 () {
 		        return 'ZlibError';
 		    }
 		}
-		exports$1.ZlibError = ZlibError;
+		exports.ZlibError = ZlibError;
 		// the Zlib class they all inherit from
 		// This thing manages the queue of requests, and returns
 		// true or false if there is anything in the queue when
@@ -43272,20 +43272,20 @@ function requireCommonjs$4 () {
 		        }
 		    }
 		}
-		exports$1.Zlib = Zlib;
+		exports.Zlib = Zlib;
 		// minimal 2-byte header
 		class Deflate extends Zlib {
 		    constructor(opts) {
 		        super(opts, 'Deflate');
 		    }
 		}
-		exports$1.Deflate = Deflate;
+		exports.Deflate = Deflate;
 		class Inflate extends Zlib {
 		    constructor(opts) {
 		        super(opts, 'Inflate');
 		    }
 		}
-		exports$1.Inflate = Inflate;
+		exports.Inflate = Inflate;
 		class Gzip extends Zlib {
 		    #portable;
 		    constructor(opts) {
@@ -43302,33 +43302,33 @@ function requireCommonjs$4 () {
 		        return super[_superWrite](data);
 		    }
 		}
-		exports$1.Gzip = Gzip;
+		exports.Gzip = Gzip;
 		class Gunzip extends Zlib {
 		    constructor(opts) {
 		        super(opts, 'Gunzip');
 		    }
 		}
-		exports$1.Gunzip = Gunzip;
+		exports.Gunzip = Gunzip;
 		// raw - no header
 		class DeflateRaw extends Zlib {
 		    constructor(opts) {
 		        super(opts, 'DeflateRaw');
 		    }
 		}
-		exports$1.DeflateRaw = DeflateRaw;
+		exports.DeflateRaw = DeflateRaw;
 		class InflateRaw extends Zlib {
 		    constructor(opts) {
 		        super(opts, 'InflateRaw');
 		    }
 		}
-		exports$1.InflateRaw = InflateRaw;
+		exports.InflateRaw = InflateRaw;
 		// auto-detect header.
 		class Unzip extends Zlib {
 		    constructor(opts) {
 		        super(opts, 'Unzip');
 		    }
 		}
-		exports$1.Unzip = Unzip;
+		exports.Unzip = Unzip;
 		class Brotli extends ZlibBase {
 		    constructor(opts, mode) {
 		        opts = opts || {};
@@ -43344,13 +43344,13 @@ function requireCommonjs$4 () {
 		        super(opts, 'BrotliCompress');
 		    }
 		}
-		exports$1.BrotliCompress = BrotliCompress;
+		exports.BrotliCompress = BrotliCompress;
 		class BrotliDecompress extends Brotli {
 		    constructor(opts) {
 		        super(opts, 'BrotliDecompress');
 		    }
 		}
-		exports$1.BrotliDecompress = BrotliDecompress;
+		exports.BrotliDecompress = BrotliDecompress;
 		class Zstd extends ZlibBase {
 		    constructor(opts, mode) {
 		        opts = opts || {};
@@ -43365,13 +43365,13 @@ function requireCommonjs$4 () {
 		        super(opts, 'ZstdCompress');
 		    }
 		}
-		exports$1.ZstdCompress = ZstdCompress;
+		exports.ZstdCompress = ZstdCompress;
 		class ZstdDecompress extends Zstd {
 		    constructor(opts) {
 		        super(opts, 'ZstdDecompress');
 		    }
 		}
-		exports$1.ZstdDecompress = ZstdDecompress;
+		exports.ZstdDecompress = ZstdDecompress;
 		
 	} (commonjs$5));
 	return commonjs$5;
@@ -55247,7 +55247,7 @@ var hasRequiredEncodings;
 function requireEncodings () {
 	if (hasRequiredEncodings) return encodings;
 	hasRequiredEncodings = 1;
-	(function (exports$1) {
+	(function (exports) {
 
 		// Update this array if you add/rename/remove files in this directory.
 		// We support Browserify by skipping automatic module discovery and requiring modules directly.
@@ -55268,7 +55268,7 @@ function requireEncodings () {
 		    var module = modules[i];
 		    for (var enc in module)
 		        if (Object.prototype.hasOwnProperty.call(module, enc))
-		            exports$1[enc] = module[enc];
+		            exports[enc] = module[enc];
 		} 
 	} (encodings));
 	return encodings;
@@ -61784,7 +61784,7 @@ var hasRequiredRe;
 function requireRe () {
 	if (hasRequiredRe) return re.exports;
 	hasRequiredRe = 1;
-	(function (module, exports$1) {
+	(function (module, exports) {
 
 		const {
 		  MAX_SAFE_COMPONENT_LENGTH,
@@ -61792,14 +61792,14 @@ function requireRe () {
 		  MAX_LENGTH,
 		} = requireConstants$3();
 		const debug = requireDebug();
-		exports$1 = module.exports = {};
+		exports = module.exports = {};
 
 		// The actual regexps go on exports.re
-		const re = exports$1.re = [];
-		const safeRe = exports$1.safeRe = [];
-		const src = exports$1.src = [];
-		const safeSrc = exports$1.safeSrc = [];
-		const t = exports$1.t = {};
+		const re = exports.re = [];
+		const safeRe = exports.safeRe = [];
+		const src = exports.src = [];
+		const safeSrc = exports.safeSrc = [];
+		const t = exports.t = {};
 		let R = 0;
 
 		const LETTERDASHNUMBER = '[a-zA-Z0-9-]';
@@ -61922,7 +61922,7 @@ function requireRe () {
 		createToken('GTLT', '((?:<|>)?=?)');
 
 		// Something like "2.*" or "1.2.x".
-		// Note that "x.x" is a valid xRange identifer, meaning "any version"
+		// Note that "x.x" is a valid xRange identifier, meaning "any version"
 		// Only the first item is strictly required.
 		createToken('XRANGEIDENTIFIERLOOSE', `${src[t.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`);
 		createToken('XRANGEIDENTIFIER', `${src[t.NUMERICIDENTIFIER]}|x|X|\\*`);
@@ -61963,7 +61963,7 @@ function requireRe () {
 		createToken('LONETILDE', '(?:~>?)');
 
 		createToken('TILDETRIM', `(\\s*)${src[t.LONETILDE]}\\s+`, true);
-		exports$1.tildeTrimReplace = '$1~';
+		exports.tildeTrimReplace = '$1~';
 
 		createToken('TILDE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAIN]}$`);
 		createToken('TILDELOOSE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAINLOOSE]}$`);
@@ -61973,7 +61973,7 @@ function requireRe () {
 		createToken('LONECARET', '(?:\\^)');
 
 		createToken('CARETTRIM', `(\\s*)${src[t.LONECARET]}\\s+`, true);
-		exports$1.caretTrimReplace = '$1^';
+		exports.caretTrimReplace = '$1^';
 
 		createToken('CARET', `^${src[t.LONECARET]}${src[t.XRANGEPLAIN]}$`);
 		createToken('CARETLOOSE', `^${src[t.LONECARET]}${src[t.XRANGEPLAINLOOSE]}$`);
@@ -61986,7 +61986,7 @@ function requireRe () {
 		// it modifies, so that `> 1.2.3` ==> `>1.2.3`
 		createToken('COMPARATORTRIM', `(\\s*)${src[t.GTLT]
 		}\\s*(${src[t.LOOSEPLAIN]}|${src[t.XRANGEPLAIN]})`, true);
-		exports$1.comparatorTrimReplace = '$1$2$3';
+		exports.comparatorTrimReplace = '$1$2$3';
 
 		// Something like `1.2.3 - 1.2.4`
 		// Note that these all use the loose form, because they'll be
@@ -62086,6 +62086,22 @@ function requireSemver$1 () {
 
 	const parseOptions = requireParseOptions();
 	const { compareIdentifiers } = requireIdentifiers();
+
+	const isPrereleaseIdentifier = (prerelease, identifier) => {
+	  const identifiers = identifier.split('.');
+	  if (identifiers.length > prerelease.length) {
+	    return false
+	  }
+
+	  for (let i = 0; i < identifiers.length; i++) {
+	    if (compareIdentifiers(prerelease[i], identifiers[i]) !== 0) {
+	      return false
+	    }
+	  }
+
+	  return true
+	};
+
 	class SemVer {
 	  constructor (version, options) {
 	    options = parseOptions(options);
@@ -62389,8 +62405,9 @@ function requireSemver$1 () {
 	          if (identifierBase === false) {
 	            prerelease = [identifier];
 	          }
-	          if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
-	            if (isNaN(this.prerelease[1])) {
+	          if (isPrereleaseIdentifier(this.prerelease, identifier)) {
+	            const prereleaseBase = this.prerelease[identifier.split('.').length];
+	            if (isNaN(prereleaseBase)) {
 	              this.prerelease = prerelease;
 	            }
 	          } else {
@@ -62918,6 +62935,62 @@ function requireCoerce () {
 	return coerce_1;
 }
 
+var truncate_1;
+var hasRequiredTruncate;
+
+function requireTruncate () {
+	if (hasRequiredTruncate) return truncate_1;
+	hasRequiredTruncate = 1;
+
+	const parse = requireParse();
+	const constants = requireConstants$3();
+	const SemVer = requireSemver$1();
+
+	const truncate = (version, truncation, options) => {
+	  if (!constants.RELEASE_TYPES.includes(truncation)) {
+	    return null
+	  }
+
+	  const clonedVersion = cloneInputVersion(version, options);
+	  return clonedVersion && doTruncation(clonedVersion, truncation)
+	};
+
+	const cloneInputVersion = (version, options) => {
+	  const versionStringToParse = (
+	    version instanceof SemVer ? version.version : version
+	  );
+
+	  return parse(versionStringToParse, options)
+	};
+
+	const doTruncation = (version, truncation) => {
+	  if (isPrerelease(truncation)) {
+	    return version.version
+	  }
+
+	  version.prerelease = [];
+
+	  switch (truncation) {
+	    case 'major':
+	      version.minor = 0;
+	      version.patch = 0;
+	      break
+	    case 'minor':
+	      version.patch = 0;
+	      break
+	  }
+
+	  return version.format()
+	};
+
+	const isPrerelease = (type) => {
+	  return type.startsWith('pre')
+	};
+
+	truncate_1 = truncate;
+	return truncate_1;
+}
+
 var lrucache;
 var hasRequiredLrucache;
 
@@ -63073,6 +63146,9 @@ function requireRange () {
 	  }
 
 	  parseRange (range) {
+	    // strip build metadata so it can't bleed into the version
+	    range = range.replace(BUILDSTRIPRE, '');
+
 	    // memoize range parsing for performance.
 	    // this is a very hot path, and fully deterministic.
 	    const memoOpts =
@@ -63198,12 +63274,16 @@ function requireRange () {
 	const SemVer = requireSemver$1();
 	const {
 	  safeRe: re,
+	  src,
 	  t,
 	  comparatorTrimReplace,
 	  tildeTrimReplace,
 	  caretTrimReplace,
 	} = requireRe();
 	const { FLAG_INCLUDE_PRERELEASE, FLAG_LOOSE } = requireConstants$3();
+
+	// unbounded global build-metadata stripper used by parseRange
+	const BUILDSTRIPRE = new RegExp(src[t.BUILD], 'g');
 
 	const isNullSet = c => c.value === '<0.0.0-0';
 	const isAny = c => c.value === '';
@@ -63245,6 +63325,11 @@ function requireRange () {
 
 	const isX = id => !id || id.toLowerCase() === 'x' || id === '*';
 
+	const invalidXRangeOrder = (M, m, p) => (
+	  (isX(M) && !isX(m)) ||
+	  (isX(m) && p && !isX(p))
+	);
+
 	// ~, ~> --> * (any, kinda silly)
 	// ~2, ~2.x, ~2.x.x, ~>2, ~>2.x ~>2.x.x --> >=2.0.0 <3.0.0-0
 	// ~2.0, ~2.0.x, ~>2.0, ~>2.0.x --> >=2.0.0 <2.1.0-0
@@ -63262,6 +63347,10 @@ function requireRange () {
 
 	const replaceTilde = (comp, options) => {
 	  const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE];
+	  // if we're including prereleases in the match, then the lower bound is
+	  // -0, the lowest possible prerelease value, just like x-ranges and carets.
+	  // this keeps `~1.2` equivalent to the `1.2.x` x-range it's documented as.
+	  const z = options.includePrerelease ? '-0' : '';
 	  return comp.replace(r, (_, M, m, p, pr) => {
 	    debug('tilde', comp, _, M, m, p, pr);
 	    let ret;
@@ -63269,10 +63358,10 @@ function requireRange () {
 	    if (isX(M)) {
 	      ret = '';
 	    } else if (isX(m)) {
-	      ret = `>=${M}.0.0 <${+M + 1}.0.0-0`;
+	      ret = `>=${M}.0.0${z} <${+M + 1}.0.0-0`;
 	    } else if (isX(p)) {
 	      // ~1.2 == >=1.2.0 <1.3.0-0
-	      ret = `>=${M}.${m}.0 <${M}.${+m + 1}.0-0`;
+	      ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`;
 	    } else if (pr) {
 	      debug('replaceTilde pr', pr);
 	      ret = `>=${M}.${m}.${p}-${pr
@@ -63341,10 +63430,10 @@ function requireRange () {
 	      if (M === '0') {
 	        if (m === '0') {
 	          ret = `>=${M}.${m}.${p
-	          }${z} <${M}.${m}.${+p + 1}-0`;
+	          } <${M}.${m}.${+p + 1}-0`;
 	        } else {
 	          ret = `>=${M}.${m}.${p
-	          }${z} <${M}.${+m + 1}.0-0`;
+	          } <${M}.${+m + 1}.0-0`;
 	        }
 	      } else {
 	        ret = `>=${M}.${m}.${p
@@ -63370,6 +63459,10 @@ function requireRange () {
 	  const r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
 	  return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
 	    debug('xRange', comp, ret, gtlt, M, m, p, pr);
+	    if (invalidXRangeOrder(M, m, p)) {
+	      return comp
+	    }
+
 	    const xM = isX(M);
 	    const xm = xM || isX(m);
 	    const xp = xm || isX(p);
@@ -64256,7 +64349,7 @@ function requireSubset () {
 	        if (higher === c && higher !== gt) {
 	          return false
 	        }
-	      } else if (gt.operator === '>=' && !satisfies(gt.semver, String(c), options)) {
+	      } else if (gt.operator === '>=' && !c.test(gt.semver)) {
 	        return false
 	      }
 	    }
@@ -64274,7 +64367,7 @@ function requireSubset () {
 	        if (lower === c && lower !== lt) {
 	          return false
 	        }
-	      } else if (lt.operator === '<=' && !satisfies(lt.semver, String(c), options)) {
+	      } else if (lt.operator === '<=' && !c.test(lt.semver)) {
 	        return false
 	      }
 	    }
@@ -64367,6 +64460,7 @@ function requireSemver () {
 	const lte = requireLte();
 	const cmp = requireCmp();
 	const coerce = requireCoerce();
+	const truncate = requireTruncate();
 	const Comparator = requireComparator();
 	const Range = requireRange();
 	const satisfies = requireSatisfies();
@@ -64405,6 +64499,7 @@ function requireSemver () {
 	  lte,
 	  cmp,
 	  coerce,
+	  truncate,
 	  Comparator,
 	  Range,
 	  satisfies,
@@ -69459,12 +69554,12 @@ var hasRequiredCommonjs$2;
 function requireCommonjs$2 () {
 	if (hasRequiredCommonjs$2) return commonjs$1;
 	hasRequiredCommonjs$2 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __importDefault = (commonjs$1 && commonjs$1.__importDefault) || function (mod) {
 		    return (mod && mod.__esModule) ? mod : { "default": mod };
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.unescape = exports$1.escape = exports$1.AST = exports$1.Minimatch = exports$1.match = exports$1.makeRe = exports$1.braceExpand = exports$1.defaults = exports$1.filter = exports$1.GLOBSTAR = exports$1.sep = exports$1.minimatch = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.unescape = exports.escape = exports.AST = exports.Minimatch = exports.match = exports.makeRe = exports.braceExpand = exports.defaults = exports.filter = exports.GLOBSTAR = exports.sep = exports.minimatch = void 0;
 		const brace_expansion_1 = __importDefault(requireBraceExpansion());
 		const assert_valid_pattern_js_1 = requireAssertValidPattern();
 		const ast_js_1 = requireAst();
@@ -69478,7 +69573,7 @@ function requireCommonjs$2 () {
 		    }
 		    return new Minimatch(pattern, options).match(p);
 		};
-		exports$1.minimatch = minimatch;
+		exports.minimatch = minimatch;
 		// Optimized checking for the most common glob patterns.
 		const starDotExtRE = /^\*+([^+@!?\*\[\(]*)$/;
 		const starDotExtTest = (ext) => (f) => !f.startsWith('.') && f.endsWith(ext);
@@ -69542,10 +69637,10 @@ function requireCommonjs$2 () {
 		    posix: { sep: '/' },
 		};
 		/* c8 ignore stop */
-		exports$1.sep = defaultPlatform === 'win32' ? path.win32.sep : path.posix.sep;
-		exports$1.minimatch.sep = exports$1.sep;
-		exports$1.GLOBSTAR = Symbol('globstar **');
-		exports$1.minimatch.GLOBSTAR = exports$1.GLOBSTAR;
+		exports.sep = defaultPlatform === 'win32' ? path.win32.sep : path.posix.sep;
+		exports.minimatch.sep = exports.sep;
+		exports.GLOBSTAR = Symbol('globstar **');
+		exports.minimatch.GLOBSTAR = exports.GLOBSTAR;
 		// any single thing other than /
 		// don't need to escape / when using new RegExp()
 		const qmark = '[^/]';
@@ -69558,15 +69653,15 @@ function requireCommonjs$2 () {
 		// not a ^ or / followed by a dot,
 		// followed by anything, any number of times.
 		const twoStarNoDot = '(?:(?!(?:\\/|^)\\.).)*?';
-		const filter = (pattern, options = {}) => (p) => (0, exports$1.minimatch)(p, pattern, options);
-		exports$1.filter = filter;
-		exports$1.minimatch.filter = exports$1.filter;
+		const filter = (pattern, options = {}) => (p) => (0, exports.minimatch)(p, pattern, options);
+		exports.filter = filter;
+		exports.minimatch.filter = exports.filter;
 		const ext = (a, b = {}) => Object.assign({}, a, b);
 		const defaults = (def) => {
 		    if (!def || typeof def !== 'object' || !Object.keys(def).length) {
-		        return exports$1.minimatch;
+		        return exports.minimatch;
 		    }
-		    const orig = exports$1.minimatch;
+		    const orig = exports.minimatch;
 		    const m = (p, pattern, options = {}) => orig(p, pattern, ext(def, options));
 		    return Object.assign(m, {
 		        Minimatch: class Minimatch extends orig.Minimatch {
@@ -69595,11 +69690,11 @@ function requireCommonjs$2 () {
 		        braceExpand: (pattern, options = {}) => orig.braceExpand(pattern, ext(def, options)),
 		        match: (list, pattern, options = {}) => orig.match(list, pattern, ext(def, options)),
 		        sep: orig.sep,
-		        GLOBSTAR: exports$1.GLOBSTAR,
+		        GLOBSTAR: exports.GLOBSTAR,
 		    });
 		};
-		exports$1.defaults = defaults;
-		exports$1.minimatch.defaults = exports$1.defaults;
+		exports.defaults = defaults;
+		exports.minimatch.defaults = exports.defaults;
 		// Brace expansion:
 		// a{b,c}d -> abd acd
 		// a{b,}c -> abc ac
@@ -69620,8 +69715,8 @@ function requireCommonjs$2 () {
 		    }
 		    return (0, brace_expansion_1.default)(pattern);
 		};
-		exports$1.braceExpand = braceExpand;
-		exports$1.minimatch.braceExpand = exports$1.braceExpand;
+		exports.braceExpand = braceExpand;
+		exports.minimatch.braceExpand = exports.braceExpand;
 		// parse a component of the expanded set.
 		// At this point, no pattern may contain "/" in it
 		// so we're going to return a 2d array, where each entry is the full
@@ -69634,8 +69729,8 @@ function requireCommonjs$2 () {
 		// of * is equivalent to a single *.  Globstar behavior is enabled by
 		// default, and can be disabled by setting options.noglobstar.
 		const makeRe = (pattern, options = {}) => new Minimatch(pattern, options).makeRe();
-		exports$1.makeRe = makeRe;
-		exports$1.minimatch.makeRe = exports$1.makeRe;
+		exports.makeRe = makeRe;
+		exports.minimatch.makeRe = exports.makeRe;
 		const match = (list, pattern, options = {}) => {
 		    const mm = new Minimatch(pattern, options);
 		    list = list.filter(f => mm.match(f));
@@ -69644,8 +69739,8 @@ function requireCommonjs$2 () {
 		    }
 		    return list;
 		};
-		exports$1.match = match;
-		exports$1.minimatch.match = exports$1.match;
+		exports.match = match;
+		exports.minimatch.match = exports.match;
 		// replace stuff like \* with *
 		const globMagic = /[?*]|[+@!]\(.*?\)|\[|\]/;
 		const regExpEscape = (s) => s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -70123,7 +70218,7 @@ function requireCommonjs$2 () {
 		                return false;
 		            }
 		            /* c8 ignore stop */
-		            if (p === exports$1.GLOBSTAR) {
+		            if (p === exports.GLOBSTAR) {
 		                this.debug('GLOBSTAR', [pattern, p, f]);
 		                // "**"
 		                // a/**/b/**/c would match the following:
@@ -70254,14 +70349,14 @@ function requireCommonjs$2 () {
 		        /* c8 ignore stop */
 		    }
 		    braceExpand() {
-		        return (0, exports$1.braceExpand)(this.pattern, this.options);
+		        return (0, exports.braceExpand)(this.pattern, this.options);
 		    }
 		    parse(pattern) {
 		        (0, assert_valid_pattern_js_1.assertValidPattern)(pattern);
 		        const options = this.options;
 		        // shortcuts
 		        if (pattern === '**')
-		            return exports$1.GLOBSTAR;
+		            return exports.GLOBSTAR;
 		        if (pattern === '')
 		            return '';
 		        // far and away, the most common glob pattern parts are
@@ -70338,18 +70433,18 @@ function requireCommonjs$2 () {
 		                }
 		                return typeof p === 'string'
 		                    ? regExpEscape(p)
-		                    : p === exports$1.GLOBSTAR
-		                        ? exports$1.GLOBSTAR
+		                    : p === exports.GLOBSTAR
+		                        ? exports.GLOBSTAR
 		                        : p._src;
 		            });
 		            pp.forEach((p, i) => {
 		                const next = pp[i + 1];
 		                const prev = pp[i - 1];
-		                if (p !== exports$1.GLOBSTAR || prev === exports$1.GLOBSTAR) {
+		                if (p !== exports.GLOBSTAR || prev === exports.GLOBSTAR) {
 		                    return;
 		                }
 		                if (prev === undefined) {
-		                    if (next !== undefined && next !== exports$1.GLOBSTAR) {
+		                    if (next !== undefined && next !== exports.GLOBSTAR) {
 		                        pp[i + 1] = '(?:\\/|' + twoStar + '\\/)?' + next;
 		                    }
 		                    else {
@@ -70359,12 +70454,12 @@ function requireCommonjs$2 () {
 		                else if (next === undefined) {
 		                    pp[i - 1] = prev + '(?:\\/|' + twoStar + ')?';
 		                }
-		                else if (next !== exports$1.GLOBSTAR) {
+		                else if (next !== exports.GLOBSTAR) {
 		                    pp[i - 1] = prev + '(?:\\/|\\/' + twoStar + '\\/)' + next;
-		                    pp[i + 1] = exports$1.GLOBSTAR;
+		                    pp[i + 1] = exports.GLOBSTAR;
 		                }
 		            });
-		            return pp.filter(p => p !== exports$1.GLOBSTAR).join('/');
+		            return pp.filter(p => p !== exports.GLOBSTAR).join('/');
 		        })
 		            .join('|');
 		        // need to wrap in parens if we had more than one thing with |,
@@ -70459,22 +70554,22 @@ function requireCommonjs$2 () {
 		        return this.negate;
 		    }
 		    static defaults(def) {
-		        return exports$1.minimatch.defaults(def).Minimatch;
+		        return exports.minimatch.defaults(def).Minimatch;
 		    }
 		}
-		exports$1.Minimatch = Minimatch;
+		exports.Minimatch = Minimatch;
 		/* c8 ignore start */
 		var ast_js_2 = requireAst();
-		Object.defineProperty(exports$1, "AST", { enumerable: true, get: function () { return ast_js_2.AST; } });
+		Object.defineProperty(exports, "AST", { enumerable: true, get: function () { return ast_js_2.AST; } });
 		var escape_js_2 = require_escape();
-		Object.defineProperty(exports$1, "escape", { enumerable: true, get: function () { return escape_js_2.escape; } });
+		Object.defineProperty(exports, "escape", { enumerable: true, get: function () { return escape_js_2.escape; } });
 		var unescape_js_2 = require_unescape();
-		Object.defineProperty(exports$1, "unescape", { enumerable: true, get: function () { return unescape_js_2.unescape; } });
+		Object.defineProperty(exports, "unescape", { enumerable: true, get: function () { return unescape_js_2.unescape; } });
 		/* c8 ignore stop */
-		exports$1.minimatch.AST = ast_js_1.AST;
-		exports$1.minimatch.Minimatch = Minimatch;
-		exports$1.minimatch.escape = escape_js_1.escape;
-		exports$1.minimatch.unescape = unescape_js_1.unescape;
+		exports.minimatch.AST = ast_js_1.AST;
+		exports.minimatch.Minimatch = Minimatch;
+		exports.minimatch.escape = escape_js_1.escape;
+		exports.minimatch.unescape = unescape_js_1.unescape;
 		
 	} (commonjs$1));
 	return commonjs$1;
@@ -73862,26 +73957,26 @@ var hasRequiredCommonjs;
 function requireCommonjs () {
 	if (hasRequiredCommonjs) return commonjs$2;
 	hasRequiredCommonjs = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.glob = exports$1.sync = exports$1.iterate = exports$1.iterateSync = exports$1.stream = exports$1.streamSync = exports$1.Ignore = exports$1.hasMagic = exports$1.Glob = exports$1.unescape = exports$1.escape = void 0;
-		exports$1.globStreamSync = globStreamSync;
-		exports$1.globStream = globStream;
-		exports$1.globSync = globSync;
-		exports$1.globIterateSync = globIterateSync;
-		exports$1.globIterate = globIterate;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.glob = exports.sync = exports.iterate = exports.iterateSync = exports.stream = exports.streamSync = exports.Ignore = exports.hasMagic = exports.Glob = exports.unescape = exports.escape = void 0;
+		exports.globStreamSync = globStreamSync;
+		exports.globStream = globStream;
+		exports.globSync = globSync;
+		exports.globIterateSync = globIterateSync;
+		exports.globIterate = globIterate;
 		const minimatch_1 = requireCommonjs$2();
 		const glob_js_1 = requireGlob$1();
 		const has_magic_js_1 = requireHasMagic();
 		var minimatch_2 = requireCommonjs$2();
-		Object.defineProperty(exports$1, "escape", { enumerable: true, get: function () { return minimatch_2.escape; } });
-		Object.defineProperty(exports$1, "unescape", { enumerable: true, get: function () { return minimatch_2.unescape; } });
+		Object.defineProperty(exports, "escape", { enumerable: true, get: function () { return minimatch_2.escape; } });
+		Object.defineProperty(exports, "unescape", { enumerable: true, get: function () { return minimatch_2.unescape; } });
 		var glob_js_2 = requireGlob$1();
-		Object.defineProperty(exports$1, "Glob", { enumerable: true, get: function () { return glob_js_2.Glob; } });
+		Object.defineProperty(exports, "Glob", { enumerable: true, get: function () { return glob_js_2.Glob; } });
 		var has_magic_js_2 = requireHasMagic();
-		Object.defineProperty(exports$1, "hasMagic", { enumerable: true, get: function () { return has_magic_js_2.hasMagic; } });
+		Object.defineProperty(exports, "hasMagic", { enumerable: true, get: function () { return has_magic_js_2.hasMagic; } });
 		var ignore_js_1 = requireIgnore();
-		Object.defineProperty(exports$1, "Ignore", { enumerable: true, get: function () { return ignore_js_1.Ignore; } });
+		Object.defineProperty(exports, "Ignore", { enumerable: true, get: function () { return ignore_js_1.Ignore; } });
 		function globStreamSync(pattern, options = {}) {
 		    return new glob_js_1.Glob(pattern, options).streamSync();
 		}
@@ -73901,34 +73996,34 @@ function requireCommonjs () {
 		    return new glob_js_1.Glob(pattern, options).iterate();
 		}
 		// aliases: glob.sync.stream() glob.stream.sync() glob.sync() etc
-		exports$1.streamSync = globStreamSync;
-		exports$1.stream = Object.assign(globStream, { sync: globStreamSync });
-		exports$1.iterateSync = globIterateSync;
-		exports$1.iterate = Object.assign(globIterate, {
+		exports.streamSync = globStreamSync;
+		exports.stream = Object.assign(globStream, { sync: globStreamSync });
+		exports.iterateSync = globIterateSync;
+		exports.iterate = Object.assign(globIterate, {
 		    sync: globIterateSync,
 		});
-		exports$1.sync = Object.assign(globSync, {
+		exports.sync = Object.assign(globSync, {
 		    stream: globStreamSync,
 		    iterate: globIterateSync,
 		});
-		exports$1.glob = Object.assign(glob_, {
+		exports.glob = Object.assign(glob_, {
 		    glob: glob_,
 		    globSync,
-		    sync: exports$1.sync,
+		    sync: exports.sync,
 		    globStream,
-		    stream: exports$1.stream,
+		    stream: exports.stream,
 		    globStreamSync,
-		    streamSync: exports$1.streamSync,
+		    streamSync: exports.streamSync,
 		    globIterate,
-		    iterate: exports$1.iterate,
+		    iterate: exports.iterate,
 		    globIterateSync,
-		    iterateSync: exports$1.iterateSync,
+		    iterateSync: exports.iterateSync,
 		    Glob: glob_js_1.Glob,
 		    hasMagic: has_magic_js_1.hasMagic,
 		    escape: minimatch_1.escape,
 		    unescape: minimatch_1.unescape,
 		});
-		exports$1.glob.glob = exports$1.glob;
+		exports.glob.glob = exports.glob;
 		
 	} (commonjs$2));
 	return commonjs$2;
@@ -74670,11 +74765,11 @@ var hasRequiredRetry$1;
 function requireRetry$1 () {
 	if (hasRequiredRetry$1) return retry$1;
 	hasRequiredRetry$1 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var RetryOperation = requireRetry_operation();
 
-		exports$1.operation = function(options) {
-		  var timeouts = exports$1.timeouts(options);
+		exports.operation = function(options) {
+		  var timeouts = exports.timeouts(options);
 		  return new RetryOperation(timeouts, {
 		      forever: options && options.forever,
 		      unref: options && options.unref,
@@ -74682,7 +74777,7 @@ function requireRetry$1 () {
 		  });
 		};
 
-		exports$1.timeouts = function(options) {
+		exports.timeouts = function(options) {
 		  if (options instanceof Array) {
 		    return [].concat(options);
 		  }
@@ -74719,7 +74814,7 @@ function requireRetry$1 () {
 		  return timeouts;
 		};
 
-		exports$1.createTimeout = function(attempt, opts) {
+		exports.createTimeout = function(attempt, opts) {
 		  var random = (opts.randomize)
 		    ? (Math.random() + 1)
 		    : 1;
@@ -74730,7 +74825,7 @@ function requireRetry$1 () {
 		  return timeout;
 		};
 
-		exports$1.wrap = function(obj, options, methods) {
+		exports.wrap = function(obj, options, methods) {
 		  if (options instanceof Array) {
 		    methods = options;
 		    options = null;
@@ -74750,7 +74845,7 @@ function requireRetry$1 () {
 		    var original = obj[method];
 
 		    obj[method] = function retryWrapper(original) {
-		      var op       = exports$1.operation(options);
+		      var op       = exports.operation(options);
 		      var args     = Array.prototype.slice.call(arguments, 1);
 		      var callback = args.pop();
 
@@ -75646,17 +75741,17 @@ var hasRequiredBrowser$1;
 function requireBrowser$1 () {
 	if (hasRequiredBrowser$1) return browser$1.exports;
 	hasRequiredBrowser$1 = 1;
-	(function (module, exports$1) {
+	(function (module, exports) {
 		/**
 		 * This is the web browser implementation of `debug()`.
 		 */
 
-		exports$1.formatArgs = formatArgs;
-		exports$1.save = save;
-		exports$1.load = load;
-		exports$1.useColors = useColors;
-		exports$1.storage = localstorage();
-		exports$1.destroy = (() => {
+		exports.formatArgs = formatArgs;
+		exports.save = save;
+		exports.load = load;
+		exports.useColors = useColors;
+		exports.storage = localstorage();
+		exports.destroy = (() => {
 			let warned = false;
 
 			return () => {
@@ -75671,7 +75766,7 @@ function requireBrowser$1 () {
 		 * Colors.
 		 */
 
-		exports$1.colors = [
+		exports.colors = [
 			'#0000CC',
 			'#0000FF',
 			'#0033CC',
@@ -75836,7 +75931,7 @@ function requireBrowser$1 () {
 		 *
 		 * @api public
 		 */
-		exports$1.log = console.debug || console.log || (() => {});
+		exports.log = console.debug || console.log || (() => {});
 
 		/**
 		 * Save `namespaces`.
@@ -75847,9 +75942,9 @@ function requireBrowser$1 () {
 		function save(namespaces) {
 			try {
 				if (namespaces) {
-					exports$1.storage.setItem('debug', namespaces);
+					exports.storage.setItem('debug', namespaces);
 				} else {
-					exports$1.storage.removeItem('debug');
+					exports.storage.removeItem('debug');
 				}
 			} catch (error) {
 				// Swallow
@@ -75866,7 +75961,7 @@ function requireBrowser$1 () {
 		function load() {
 			let r;
 			try {
-				r = exports$1.storage.getItem('debug') || exports$1.storage.getItem('DEBUG') ;
+				r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
 			} catch (error) {
 				// Swallow
 				// XXX (@Qix-) should we be logging these?
@@ -75902,7 +75997,7 @@ function requireBrowser$1 () {
 			}
 		}
 
-		module.exports = requireCommon$1()(exports$1);
+		module.exports = requireCommon$1()(exports);
 
 		const {formatters} = module.exports;
 
@@ -75965,7 +76060,7 @@ var hasRequiredNode;
 function requireNode () {
 	if (hasRequiredNode) return node.exports;
 	hasRequiredNode = 1;
-	(function (module, exports$1) {
+	(function (module, exports) {
 		const tty = require$$0$h;
 		const util = require$$6$1;
 
@@ -75973,13 +76068,13 @@ function requireNode () {
 		 * This is the Node.js implementation of `debug()`.
 		 */
 
-		exports$1.init = init;
-		exports$1.log = log;
-		exports$1.formatArgs = formatArgs;
-		exports$1.save = save;
-		exports$1.load = load;
-		exports$1.useColors = useColors;
-		exports$1.destroy = util.deprecate(
+		exports.init = init;
+		exports.log = log;
+		exports.formatArgs = formatArgs;
+		exports.save = save;
+		exports.load = load;
+		exports.useColors = useColors;
+		exports.destroy = util.deprecate(
 			() => {},
 			'Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.'
 		);
@@ -75988,7 +76083,7 @@ function requireNode () {
 		 * Colors.
 		 */
 
-		exports$1.colors = [6, 2, 3, 4, 5, 1];
+		exports.colors = [6, 2, 3, 4, 5, 1];
 
 		try {
 			// Optional dependency (as in, doesn't need to be installed, NOT like optionalDependencies in package.json)
@@ -75996,7 +76091,7 @@ function requireNode () {
 			const supportsColor = requireBrowser();
 
 			if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
-				exports$1.colors = [
+				exports.colors = [
 					20,
 					21,
 					26,
@@ -76085,7 +76180,7 @@ function requireNode () {
 		 *   $ DEBUG_COLORS=no DEBUG_DEPTH=10 DEBUG_SHOW_HIDDEN=enabled node script.js
 		 */
 
-		exports$1.inspectOpts = Object.keys(process.env).filter(key => {
+		exports.inspectOpts = Object.keys(process.env).filter(key => {
 			return /^debug_/i.test(key);
 		}).reduce((obj, key) => {
 			// Camel-case
@@ -76117,8 +76212,8 @@ function requireNode () {
 		 */
 
 		function useColors() {
-			return 'colors' in exports$1.inspectOpts ?
-				Boolean(exports$1.inspectOpts.colors) :
+			return 'colors' in exports.inspectOpts ?
+				Boolean(exports.inspectOpts.colors) :
 				tty.isatty(process.stderr.fd);
 		}
 
@@ -76144,7 +76239,7 @@ function requireNode () {
 		}
 
 		function getDate() {
-			if (exports$1.inspectOpts.hideDate) {
+			if (exports.inspectOpts.hideDate) {
 				return '';
 			}
 			return new Date().toISOString() + ' ';
@@ -76155,7 +76250,7 @@ function requireNode () {
 		 */
 
 		function log(...args) {
-			return process.stderr.write(util.formatWithOptions(exports$1.inspectOpts, ...args) + '\n');
+			return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
 		}
 
 		/**
@@ -76195,13 +76290,13 @@ function requireNode () {
 		function init(debug) {
 			debug.inspectOpts = {};
 
-			const keys = Object.keys(exports$1.inspectOpts);
+			const keys = Object.keys(exports.inspectOpts);
 			for (let i = 0; i < keys.length; i++) {
-				debug.inspectOpts[keys[i]] = exports$1.inspectOpts[keys[i]];
+				debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
 			}
 		}
 
-		module.exports = requireCommon$1()(exports$1);
+		module.exports = requireCommon$1()(exports);
 
 		const {formatters} = module.exports;
 
@@ -76329,7 +76424,7 @@ var hasRequiredDist$4;
 function requireDist$4 () {
 	if (hasRequiredDist$4) return dist$2;
 	hasRequiredDist$4 = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (dist$2 && dist$2.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -76353,15 +76448,15 @@ function requireDist$4 () {
 		    __setModuleDefault(result, mod);
 		    return result;
 		};
-		var __exportStar = (dist$2 && dist$2.__exportStar) || function(m, exports$1) {
-		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports$1, p)) __createBinding(exports$1, m, p);
+		var __exportStar = (dist$2 && dist$2.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.Agent = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.Agent = void 0;
 		const net = __importStar(require$$0$i);
 		const http$1 = __importStar(http);
 		const https_1 = https;
-		__exportStar(requireHelpers$2(), exports$1);
+		__exportStar(requireHelpers$2(), exports);
 		const INTERNAL = Symbol('AgentBaseInternalState');
 		class Agent extends http$1.Agent {
 		    constructor(opts) {
@@ -76505,7 +76600,7 @@ function requireDist$4 () {
 		        }
 		    }
 		}
-		exports$1.Agent = Agent;
+		exports.Agent = Agent;
 		
 	} (dist$2));
 	return dist$2;
@@ -80781,7 +80876,7 @@ var hasRequiredIpAddress;
 function requireIpAddress () {
 	if (hasRequiredIpAddress) return ipAddress;
 	hasRequiredIpAddress = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (ipAddress && ipAddress.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -80805,16 +80900,16 @@ function requireIpAddress () {
 		    __setModuleDefault(result, mod);
 		    return result;
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.v6 = exports$1.AddressError = exports$1.Address6 = exports$1.Address4 = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.v6 = exports.AddressError = exports.Address6 = exports.Address4 = void 0;
 		var ipv4_1 = /*@__PURE__*/ requireIpv4();
-		Object.defineProperty(exports$1, "Address4", { enumerable: true, get: function () { return ipv4_1.Address4; } });
+		Object.defineProperty(exports, "Address4", { enumerable: true, get: function () { return ipv4_1.Address4; } });
 		var ipv6_1 = /*@__PURE__*/ requireIpv6();
-		Object.defineProperty(exports$1, "Address6", { enumerable: true, get: function () { return ipv6_1.Address6; } });
+		Object.defineProperty(exports, "Address6", { enumerable: true, get: function () { return ipv6_1.Address6; } });
 		var address_error_1 = /*@__PURE__*/ requireAddressError();
-		Object.defineProperty(exports$1, "AddressError", { enumerable: true, get: function () { return address_error_1.AddressError; } });
+		Object.defineProperty(exports, "AddressError", { enumerable: true, get: function () { return address_error_1.AddressError; } });
 		const helpers = __importStar(/*@__PURE__*/ requireHelpers$1());
-		exports$1.v6 = { helpers };
+		exports.v6 = { helpers };
 		
 	} (ipAddress));
 	return ipAddress;
@@ -81051,7 +81146,7 @@ var hasRequiredSocksclient;
 function requireSocksclient () {
 	if (hasRequiredSocksclient) return socksclient;
 	hasRequiredSocksclient = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __awaiter = (socksclient && socksclient.__awaiter) || function (thisArg, _arguments, P, generator) {
 		    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 		    return new (P || (P = Promise))(function (resolve, reject) {
@@ -81061,8 +81156,8 @@ function requireSocksclient () {
 		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.SocksClientError = exports$1.SocksClient = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.SocksClientError = exports.SocksClient = void 0;
 		const events_1 = require$$0$3;
 		const net = require$$0$i;
 		const smart_buffer_1 = requireSmartbuffer();
@@ -81070,7 +81165,7 @@ function requireSocksclient () {
 		const helpers_1 = requireHelpers();
 		const receivebuffer_1 = requireReceivebuffer();
 		const util_1 = requireUtil();
-		Object.defineProperty(exports$1, "SocksClientError", { enumerable: true, get: function () { return util_1.SocksClientError; } });
+		Object.defineProperty(exports, "SocksClientError", { enumerable: true, get: function () { return util_1.SocksClientError; } });
 		const ip_address_1 = /*@__PURE__*/ requireIpAddress();
 		class SocksClient extends events_1.EventEmitter {
 		    constructor(options) {
@@ -81842,7 +81937,7 @@ function requireSocksclient () {
 		        return Object.assign({}, this.options);
 		    }
 		}
-		exports$1.SocksClient = SocksClient;
+		exports.SocksClient = SocksClient;
 		
 	} (socksclient));
 	return socksclient;
@@ -81853,7 +81948,7 @@ var hasRequiredBuild;
 function requireBuild () {
 	if (hasRequiredBuild) return build;
 	hasRequiredBuild = 1;
-	(function (exports$1) {
+	(function (exports) {
 		var __createBinding = (build && build.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -81865,11 +81960,11 @@ function requireBuild () {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __exportStar = (build && build.__exportStar) || function(m, exports$1) {
-		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports$1, p)) __createBinding(exports$1, m, p);
+		var __exportStar = (build && build.__exportStar) || function(m, exports) {
+		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 		};
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		__exportStar(requireSocksclient(), exports$1);
+		Object.defineProperty(exports, "__esModule", { value: true });
+		__exportStar(requireSocksclient(), exports);
 		
 	} (build));
 	return build;
@@ -83465,9 +83560,9 @@ var hasRequiredIdentity;
 function requireIdentity () {
 	if (hasRequiredIdentity) return identity;
 	hasRequiredIdentity = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.CIContextProvider = void 0;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.CIContextProvider = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -83484,7 +83579,7 @@ function requireIdentity () {
 		limitations under the License.
 		*/
 		var ci_1 = requireCi();
-		Object.defineProperty(exports$1, "CIContextProvider", { enumerable: true, get: function () { return ci_1.CIContextProvider; } }); 
+		Object.defineProperty(exports, "CIContextProvider", { enumerable: true, get: function () { return ci_1.CIContextProvider; } }); 
 	} (identity));
 	return identity;
 }
@@ -83777,9 +83872,9 @@ var hasRequiredFulcio;
 function requireFulcio () {
 	if (hasRequiredFulcio) return fulcio$1;
 	hasRequiredFulcio = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.FulcioSigner = exports$1.DEFAULT_FULCIO_URL = void 0;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.FulcioSigner = exports.DEFAULT_FULCIO_URL = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -83799,7 +83894,7 @@ function requireFulcio () {
 		const util_1 = requireUtil$1();
 		const ca_1 = requireCa();
 		const ephemeral_1 = requireEphemeral();
-		exports$1.DEFAULT_FULCIO_URL = 'https://fulcio.sigstore.dev';
+		exports.DEFAULT_FULCIO_URL = 'https://fulcio.sigstore.dev';
 		// Signer implementation which can be used to decorate another signer
 		// with a Fulcio-issued signing certificate for the signer's public key.
 		// Must be instantiated with an identity provider which can provide a JWT
@@ -83808,7 +83903,7 @@ function requireFulcio () {
 		    constructor(options) {
 		        this.ca = new ca_1.CAClient({
 		            ...options,
-		            fulcioBaseURL: options.fulcioBaseURL || /* istanbul ignore next */ exports$1.DEFAULT_FULCIO_URL,
+		            fulcioBaseURL: options.fulcioBaseURL || /* istanbul ignore next */ exports.DEFAULT_FULCIO_URL,
 		        });
 		        this.identityProvider = options.identityProvider;
 		        this.keyHolder = options.keyHolder || new ephemeral_1.EphemeralSigner();
@@ -83863,7 +83958,7 @@ function requireFulcio () {
 		        }
 		    }
 		}
-		exports$1.FulcioSigner = FulcioSigner; 
+		exports.FulcioSigner = FulcioSigner; 
 	} (fulcio$1));
 	return fulcio$1;
 }
@@ -83873,10 +83968,10 @@ var hasRequiredSigner;
 function requireSigner () {
 	if (hasRequiredSigner) return signer;
 	hasRequiredSigner = 1;
-	(function (exports$1) {
+	(function (exports) {
 		/* istanbul ignore file */
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.FulcioSigner = exports$1.DEFAULT_FULCIO_URL = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.FulcioSigner = exports.DEFAULT_FULCIO_URL = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -83893,8 +83988,8 @@ function requireSigner () {
 		limitations under the License.
 		*/
 		var fulcio_1 = requireFulcio();
-		Object.defineProperty(exports$1, "DEFAULT_FULCIO_URL", { enumerable: true, get: function () { return fulcio_1.DEFAULT_FULCIO_URL; } });
-		Object.defineProperty(exports$1, "FulcioSigner", { enumerable: true, get: function () { return fulcio_1.FulcioSigner; } }); 
+		Object.defineProperty(exports, "DEFAULT_FULCIO_URL", { enumerable: true, get: function () { return fulcio_1.DEFAULT_FULCIO_URL; } });
+		Object.defineProperty(exports, "FulcioSigner", { enumerable: true, get: function () { return fulcio_1.FulcioSigner; } }); 
 	} (signer));
 	return signer;
 }
@@ -84216,9 +84311,9 @@ var hasRequiredTlog;
 function requireTlog () {
 	if (hasRequiredTlog) return tlog;
 	hasRequiredTlog = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.RekorWitness = exports$1.DEFAULT_REKOR_URL = void 0;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.RekorWitness = exports.DEFAULT_REKOR_URL = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -84237,13 +84332,13 @@ function requireTlog () {
 		const util_1 = requireUtil$1();
 		const client_1 = requireClient$1();
 		const entry_1 = requireEntry();
-		exports$1.DEFAULT_REKOR_URL = 'https://rekor.sigstore.dev';
+		exports.DEFAULT_REKOR_URL = 'https://rekor.sigstore.dev';
 		class RekorWitness {
 		    constructor(options) {
 		        this.entryType = options.entryType;
 		        this.tlog = new client_1.TLogClient({
 		            ...options,
-		            rekorBaseURL: options.rekorBaseURL || /* istanbul ignore next */ exports$1.DEFAULT_REKOR_URL,
+		            rekorBaseURL: options.rekorBaseURL || /* istanbul ignore next */ exports.DEFAULT_REKOR_URL,
 		        });
 		    }
 		    async testify(content, publicKey) {
@@ -84252,7 +84347,7 @@ function requireTlog () {
 		        return toTransparencyLogEntry(entry);
 		    }
 		}
-		exports$1.RekorWitness = RekorWitness;
+		exports.RekorWitness = RekorWitness;
 		function toTransparencyLogEntry(entry) {
 		    const logID = Buffer.from(entry.logID, 'hex');
 		    // Parse entry body so we can extract the kind and version.
@@ -84462,10 +84557,10 @@ var hasRequiredWitness;
 function requireWitness () {
 	if (hasRequiredWitness) return witness;
 	hasRequiredWitness = 1;
-	(function (exports$1) {
+	(function (exports) {
 		/* istanbul ignore file */
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.TSAWitness = exports$1.RekorWitness = exports$1.DEFAULT_REKOR_URL = void 0;
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TSAWitness = exports.RekorWitness = exports.DEFAULT_REKOR_URL = void 0;
 		/*
 		Copyright 2023 The Sigstore Authors.
 
@@ -84482,10 +84577,10 @@ function requireWitness () {
 		limitations under the License.
 		*/
 		var tlog_1 = requireTlog();
-		Object.defineProperty(exports$1, "DEFAULT_REKOR_URL", { enumerable: true, get: function () { return tlog_1.DEFAULT_REKOR_URL; } });
-		Object.defineProperty(exports$1, "RekorWitness", { enumerable: true, get: function () { return tlog_1.RekorWitness; } });
+		Object.defineProperty(exports, "DEFAULT_REKOR_URL", { enumerable: true, get: function () { return tlog_1.DEFAULT_REKOR_URL; } });
+		Object.defineProperty(exports, "RekorWitness", { enumerable: true, get: function () { return tlog_1.RekorWitness; } });
 		var tsa_1 = requireTsa();
-		Object.defineProperty(exports$1, "TSAWitness", { enumerable: true, get: function () { return tsa_1.TSAWitness; } }); 
+		Object.defineProperty(exports, "TSAWitness", { enumerable: true, get: function () { return tsa_1.TSAWitness; } }); 
 	} (witness));
 	return witness;
 }
@@ -84495,23 +84590,23 @@ var hasRequiredDist;
 function requireDist () {
 	if (hasRequiredDist) return dist$5;
 	hasRequiredDist = 1;
-	(function (exports$1) {
-		Object.defineProperty(exports$1, "__esModule", { value: true });
-		exports$1.TSAWitness = exports$1.RekorWitness = exports$1.DEFAULT_REKOR_URL = exports$1.FulcioSigner = exports$1.DEFAULT_FULCIO_URL = exports$1.CIContextProvider = exports$1.InternalError = exports$1.MessageSignatureBundleBuilder = exports$1.DSSEBundleBuilder = void 0;
+	(function (exports) {
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.TSAWitness = exports.RekorWitness = exports.DEFAULT_REKOR_URL = exports.FulcioSigner = exports.DEFAULT_FULCIO_URL = exports.CIContextProvider = exports.InternalError = exports.MessageSignatureBundleBuilder = exports.DSSEBundleBuilder = void 0;
 		var bundler_1 = requireBundler();
-		Object.defineProperty(exports$1, "DSSEBundleBuilder", { enumerable: true, get: function () { return bundler_1.DSSEBundleBuilder; } });
-		Object.defineProperty(exports$1, "MessageSignatureBundleBuilder", { enumerable: true, get: function () { return bundler_1.MessageSignatureBundleBuilder; } });
+		Object.defineProperty(exports, "DSSEBundleBuilder", { enumerable: true, get: function () { return bundler_1.DSSEBundleBuilder; } });
+		Object.defineProperty(exports, "MessageSignatureBundleBuilder", { enumerable: true, get: function () { return bundler_1.MessageSignatureBundleBuilder; } });
 		var error_1 = requireError();
-		Object.defineProperty(exports$1, "InternalError", { enumerable: true, get: function () { return error_1.InternalError; } });
+		Object.defineProperty(exports, "InternalError", { enumerable: true, get: function () { return error_1.InternalError; } });
 		var identity_1 = requireIdentity();
-		Object.defineProperty(exports$1, "CIContextProvider", { enumerable: true, get: function () { return identity_1.CIContextProvider; } });
+		Object.defineProperty(exports, "CIContextProvider", { enumerable: true, get: function () { return identity_1.CIContextProvider; } });
 		var signer_1 = requireSigner();
-		Object.defineProperty(exports$1, "DEFAULT_FULCIO_URL", { enumerable: true, get: function () { return signer_1.DEFAULT_FULCIO_URL; } });
-		Object.defineProperty(exports$1, "FulcioSigner", { enumerable: true, get: function () { return signer_1.FulcioSigner; } });
+		Object.defineProperty(exports, "DEFAULT_FULCIO_URL", { enumerable: true, get: function () { return signer_1.DEFAULT_FULCIO_URL; } });
+		Object.defineProperty(exports, "FulcioSigner", { enumerable: true, get: function () { return signer_1.FulcioSigner; } });
 		var witness_1 = requireWitness();
-		Object.defineProperty(exports$1, "DEFAULT_REKOR_URL", { enumerable: true, get: function () { return witness_1.DEFAULT_REKOR_URL; } });
-		Object.defineProperty(exports$1, "RekorWitness", { enumerable: true, get: function () { return witness_1.RekorWitness; } });
-		Object.defineProperty(exports$1, "TSAWitness", { enumerable: true, get: function () { return witness_1.TSAWitness; } }); 
+		Object.defineProperty(exports, "DEFAULT_REKOR_URL", { enumerable: true, get: function () { return witness_1.DEFAULT_REKOR_URL; } });
+		Object.defineProperty(exports, "RekorWitness", { enumerable: true, get: function () { return witness_1.RekorWitness; } });
+		Object.defineProperty(exports, "TSAWitness", { enumerable: true, get: function () { return witness_1.TSAWitness; } }); 
 	} (dist$5));
 	return dist$5;
 }
