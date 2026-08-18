@@ -146,30 +146,29 @@ export async function attestBuildArtifacts(
     return results
   }
 
-  const subjectDigests = subjects.map((s) => ({
-    name: s.name,
-    digest: { sha256: computeSha256(s.filePath) }
-  }))
+  for (const subject of subjects) {
+    const digest = computeSha256(subject.filePath)
+    core.info(`Attesting ${subject.name} (sha256:${digest})...`)
 
-  core.info(
-    `Attesting build artifacts: ${subjects.map((s) => s.name).join(', ')}`
-  )
+    try {
+      const attestation = await attestProvenance({
+        subjectName: subject.name,
+        subjectDigest: { sha256: digest },
+        token,
+        sigstore: 'public-good'
+      })
 
-  try {
-    const attestation = await attestProvenance({
-      subjects: subjectDigests,
-      token,
-      sigstore: 'github'
-    })
-
-    core.info(`Attestation created (ID: ${attestation.attestationID})`)
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    results.push({
-      message: `Attestation failed: ${message}. Ensure the workflow has id-token:write and attestations:write permissions.`,
-      severity: 'warning',
-      check: 'release'
-    })
+      core.info(
+        `Attestation created for ${subject.name} (ID: ${attestation.attestationID})`
+      )
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      results.push({
+        message: `Attestation failed for ${subject.name}: ${message}. Ensure the workflow has id-token:write and attestations:write permissions.`,
+        severity: 'warning',
+        check: 'release'
+      })
+    }
   }
 
   return results
