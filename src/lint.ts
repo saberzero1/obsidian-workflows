@@ -255,7 +255,7 @@ const IGNORES = ${JSON.stringify(SCANNER_STYLELINT_CONFIG.ignoreFiles)};
 
 export default [
   globalIgnores(IGNORES),
-  { ignores: ["eslint.config.scanner.mjs"] },
+  { ignores: ["eslint.config.scanner.mjs", "main.js", "styles.css"] },
   ...obsidianmd.configs.recommended.map(config => {
     if (config.rules) {
       const filtered = { ...config.rules };
@@ -397,7 +397,7 @@ export default [
     }
   },
   globalIgnores(IGNORES),
-  { ignores: ["eslint.config.scanner.mjs"] },
+  { ignores: ["eslint.config.scanner.mjs", "main.js", "styles.css"] },
 ];
 `
 }
