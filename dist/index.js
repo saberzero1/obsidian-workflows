@@ -87897,6 +87897,10 @@ function attestProvenance(options) {
     });
 }
 
+function getSigstoreInstance() {
+    const repoVisibility = process.env.GITHUB_REPOSITORY_VISIBILITY ?? '';
+    return repoVisibility === 'public' ? 'public-good' : 'github';
+}
 function getTagFromRef() {
     const ref = process.env.GITHUB_REF ?? '';
     if (ref.startsWith('refs/tags/'))
@@ -88007,7 +88011,7 @@ async function attestBuildArtifacts(workspacePath, projectType) {
                 subjectName: subject.name,
                 subjectDigest: { sha256: digest },
                 token,
-                sigstore: 'public-good'
+                sigstore: getSigstoreInstance()
             });
             info(`Attestation created for ${subject.name} (ID: ${attestation.attestationID})`);
         }

@@ -7,6 +7,13 @@ import { attestProvenance } from '@actions/attest'
 import { readManifest } from './detect.js'
 import type { ProjectType, ValidationResult } from './types.js'
 
+type SigstoreInstance = 'public-good' | 'github'
+
+function getSigstoreInstance(): SigstoreInstance {
+  const repoVisibility = process.env.GITHUB_REPOSITORY_VISIBILITY ?? ''
+  return repoVisibility === 'public' ? 'public-good' : 'github'
+}
+
 function getTagFromRef(): string | null {
   const ref = process.env.GITHUB_REF ?? ''
   if (ref.startsWith('refs/tags/')) return ref.replace('refs/tags/', '')
@@ -155,7 +162,7 @@ export async function attestBuildArtifacts(
         subjectName: subject.name,
         subjectDigest: { sha256: digest },
         token,
-        sigstore: 'public-good'
+        sigstore: getSigstoreInstance()
       })
 
       core.info(
