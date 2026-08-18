@@ -293,7 +293,9 @@ async function runScannerStylelint(
         'stylelint',
         ...existingFiles,
         '--config',
-        configPath
+        configPath,
+        '--config-basedir',
+        path.join(scannerDir, 'node_modules')
       ],
       {
         cwd: workspacePath,
@@ -506,7 +508,7 @@ async function runScannerEslint(
   }
 
   const configContent = buildScannerEslintConfig(hasTsconfig)
-  const configPath = path.join(workspacePath, 'eslint.config.scanner.mjs')
+  const configPath = path.join(scannerDir, 'eslint.config.scanner.mjs')
   fs.writeFileSync(configPath, configContent)
 
   try {
@@ -551,7 +553,6 @@ async function runScannerEslint(
     }
   } finally {
     fs.rmSync(scannerDir, { recursive: true, force: true })
-    if (fs.existsSync(configPath)) fs.unlinkSync(configPath)
   }
 
   return results
