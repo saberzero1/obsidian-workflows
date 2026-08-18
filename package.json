@@ -1,7 +1,7 @@
 {
   "name": "obsidian-workflows",
   "description": "Validate, lint, build, and release Obsidian plugins and themes",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "saberzero1",
   "type": "module",
   "private": true,

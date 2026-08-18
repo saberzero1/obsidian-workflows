@@ -16,7 +16,7 @@ your submissions pass on the first try.
 name: CI
 on:
   pull_request:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
   validate:
