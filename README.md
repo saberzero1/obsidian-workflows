@@ -1,7 +1,7 @@
 # Obsidian Workflows
 
-![CI](https://github.com/saberzero1/obsidian-workflows/actions/workflows/ci.yml/badge.svg)
-![Check dist/](https://github.com/saberzero1/obsidian-workflows/actions/workflows/check-dist.yml/badge.svg)
+![CI](https://github.com/obsidianmd/obsidian-workflows/actions/workflows/ci.yml/badge.svg)
+![Check dist/](https://github.com/obsidianmd/obsidian-workflows/actions/workflows/check-dist.yml/badge.svg)
 ![Coverage](./badges/coverage.svg)
 
 A GitHub Action that validates, lints, builds, and releases Obsidian plugins and
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: saberzero1/obsidian-workflows@v1
+      - uses: obsidianmd/obsidian-workflows@v1
 ```
 
 The action auto-detects whether your project is a plugin or theme.
@@ -56,7 +56,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - uses: saberzero1/obsidian-workflows@v1
+      - uses: obsidianmd/obsidian-workflows@v1
         with:
           mode: release
         env:
@@ -77,7 +77,7 @@ on:
 
 jobs:
   release:
-    uses: saberzero1/obsidian-workflows/.github/workflows/release.yml@v1
+    uses: obsidianmd/obsidian-workflows/.github/workflows/release.yml@v1
     permissions:
       contents: write
       id-token: write

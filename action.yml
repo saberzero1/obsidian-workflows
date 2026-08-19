@@ -2,7 +2,7 @@ name: Obsidian Plugin & Theme Workflows
 description: >-
   Validate, lint, build, and release Obsidian plugins and themes. Matches the
   community directory's validation and scanner expectations.
-author: saberzero1
+author: Obsidian
 branding:
   icon: check-circle
   color: purple

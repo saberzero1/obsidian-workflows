@@ -2,16 +2,16 @@
   "name": "obsidian-workflows",
   "description": "Validate, lint, build, and release Obsidian plugins and themes",
   "version": "1.0.0",
-  "author": "saberzero1",
+  "author": "",
   "type": "module",
   "private": true,
-  "homepage": "https://github.com/saberzero1/obsidian-workflows",
+  "homepage": "https://github.com/obsidianmd/obsidian-workflows",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saberzero1/obsidian-workflows.git"
+    "url": "git+https://github.com/obsidianmd/obsidian-workflows.git"
   },
   "bugs": {
-    "url": "https://github.com/saberzero1/obsidian-workflows/issues"
+    "url": "https://github.com/obsidianmd/obsidian-workflows/issues"
   },
   "keywords": [
     "actions",

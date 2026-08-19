@@ -37,7 +37,7 @@ jobs:
           cache: npm
 
       - name: Validate, build, and release
-        uses: saberzero1/obsidian-workflows@v1
+        uses: obsidianmd/obsidian-workflows@v1
         with:
           type: ${{ inputs.type }}
           mode: release
