@@ -573,8 +573,7 @@ export async function runLint(
   const minAppVersion =
     manifest && typeof manifest === 'object'
       ? ((manifest as Record<string, unknown>).minAppVersion as
-          | string
-          | undefined)
+          string | undefined)
       : undefined
 
   results.push(
